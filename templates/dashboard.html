@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIMS Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --accent: #38bdf8;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border: #334155;
+        }
+
+        body {
+            font-family: system-ui, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--accent);
+            font-size: 2em;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 10px 0;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 5px;
+        }
+
+        #stat-total { color: var(--text-primary); }
+        #stat-added { color: var(--success); }
+        #stat-modified { color: var(--warning); }
+        #stat-deleted { color: var(--danger); }
+
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 350px;
+            padding: 10px;
+        }
+
+        .chart-title {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: var(--text-primary);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            background-color: #1e293b;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: rgba(148, 163, 184, 0.03);
+        }
+
+        tr:hover {
+            background-color: rgba(56, 189, 248, 0.08);
+            cursor: pointer;
+        }
+
+        .file-path {
+            color: #94a3b8;
+            font-size: 0.85em;
+            font-family: 'Courier New', monospace;
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-info {
+            background-color: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+        }
+
+        .badge-warning {
+            background-color: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .badge-critical {
+            background-color: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #ef4444;
+        }
+
+        .status-dot.online {
+            background-color: #22c55e;
+        }
+
+        .refresh-btn {
+            background-color: var(--accent);
+            color: var(--bg-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            margin-left: 15px;
+        }
+
+        .refresh-btn:hover {
+            background-color: #0ea5e9;
+            transform: scale(1.05);
+        }
+
+        .refresh-btn:active {
+            transform: scale(0.95);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+        }
+
+        #logs-container {
+            max-height: 500px;
+            overflow-y: auto;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .logs-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .download-btn {
+            background-color: #22c55e;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .download-btn:hover {
+            background-color: #16a34a;
+            transform: translateY(-1px);
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
+        }
+
+        #logs-container::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        #logs-container::-webkit-scrollbar-track {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+
+        #logs-container::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+
+        #logs-container::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>FIMS Central</h1>
+                <p style="margin: 5px 0; color: #94a3b8;">File Integrity Monitoring System – Real-time Analytics</p>
+            </div>
+            <div class="header-right">
+                <button class="refresh-btn" onclick="fetchData()">↻ Refresh</button>
+                <div class="status">
+                    <span class="status-dot" id="status-dot"></span>
+                    <span id="status-text">Connecting...</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="card">
+                <div class="card-title">Total Events</div>
+                <div id="stat-total" class="stat-value">-</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Files Added</div>
+                <div id="stat-added" class="stat-value">-</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Files Modified</div>
+                <div id="stat-modified" class="stat-value">-</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Files Deleted</div>
+                <div id="stat-deleted" class="stat-value">-</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-grid">
+            <div class="card">
+                <h3 class="chart-title">Event Distribution</h3>
+                <div class="chart-container">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <h3 class="chart-title">Event Type Comparison</h3>
+                <div class="chart-container">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline Chart -->
+        <div class="card" style="margin-bottom: 16px;">
+            <h3 class="chart-title">Activity Timeline (Last 24 Hours)</h3>
+            <div class="chart-container" style="height: 250px;">
+                <canvas id="lineChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Recent Logs -->
+        <div class="layout-grid">
+            <div class="card">
+                <div class="logs-header">
+                    <h2 style="margin: 0;">Recent Activity Log</h2>
+                    <button class="download-btn" onclick="downloadLogs()">
+                        <span>⬇</span> Download Logs
+                    </button>
+                </div>
+                <div id="logs-container" class="loading">Loading logs...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let pieChart = null;
+        let barChart = null;
+        let lineChart = null;
+
+        async function fetchData() {
+            try {
+                console.log('Fetching data from API...');
+                const [logsRes, analyticsRes] = await Promise.all([
+                    fetch('/api/logs?limit=100'),
+                    fetch('/api/analytics')
+                ]);
+
+                if (!logsRes.ok || !analyticsRes.ok) {
+                    throw new Error(`API error: logs=${logsRes.status}, analytics=${analyticsRes.status}`);
+                }
+
+                const logs = await logsRes.json();
+                const analytics = await analyticsRes.json();
+
+                console.log('Data received:', { logs: logs.length, analytics });
+
+                updateStats(analytics.counters);
+                renderLogs(logs);
+                updateCharts(analytics);
+
+                // Update status
+                document.getElementById('status-dot').classList.add('online');
+                document.getElementById('status-text').textContent = 'Live';
+
+            } catch (error) {
+                console.error('Fetch error:', error);
+                document.getElementById('status-text').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        function updateStats(counters) {
+            document.getElementById('stat-total').textContent = counters.total_events || 0;
+            document.getElementById('stat-added').textContent = counters.files_added || 0;
+            document.getElementById('stat-modified').textContent = counters.files_modified || 0;
+            document.getElementById('stat-deleted').textContent = counters.files_deleted || 0;
+        }
+
+        function renderLogs(logs) {
+            const container = document.getElementById('logs-container');
+            
+            if (!logs || logs.length === 0) {
+                container.innerHTML = '<p class="loading">No logs yet</p>';
+                return;
+            }
+
+            let html = '<table><thead><tr><th>TIME</th><th>AGENT</th><th>SEVERITY</th><th>EVENT</th><th>FILE</th></tr></thead><tbody>';
+            
+            logs.slice(0, 50).forEach(log => {
+                const badgeClass = log.severity === 'CRITICAL' ? 'badge-critical' : 
+                                   log.severity === 'WARNING' ? 'badge-warning' : 'badge-info';
+                
+                // Format timestamp to be more readable
+                let formattedTime = log.timestamp;
+                try {
+                    const date = new Date(log.timestamp);
+                    formattedTime = date.toLocaleString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false
+                    });
+                } catch (e) {
+                    formattedTime = log.timestamp;
+                }
+
+                // Extract filename and show path on hover
+                const fileName = log.file_path.substring(Math.max(
+                    log.file_path.lastIndexOf('\\'),
+                    log.file_path.lastIndexOf('/')
+                ) + 1);
+
+                // Format event type
+                const eventType = log.event_type.replace('FILE_', '');
+
+                html += `<tr title="${log.file_path}">
+                    <td style="white-space: nowrap;">${formattedTime}</td>
+                    <td><strong>${log.agent_name}</strong></td>
+                    <td><span class="badge ${badgeClass}">${log.severity}</span></td>
+                    <td><strong>${eventType}</strong></td>
+                    <td class="file-path" title="${log.file_path}">${fileName}</td>
+                </tr>`;
+            });
+            
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        function updateCharts(analytics) {
+            const dist = analytics.distribution || {};
+            const labels = Object.keys(dist);
+            const data = Object.values(dist);
+
+            // Color mapping for event types
+            const colorMap = {
+                'FILE_ADDED': '#22c55e',
+                'FILE_MODIFIED': '#f59e0b',
+                'FILE_DELETED': '#ef4444',
+                'FILE_ACCESSED': '#3b82f6',
+                'FILE_RENAMED': '#8b5cf6'
+            };
+
+            const backgroundColors = labels.map(label => colorMap[label] || '#64748b');
+            const borderColors = labels.map(label => {
+                const color = colorMap[label] || '#64748b';
+                return color;
+            });
+
+            // Pie Chart - Event Distribution
+            const pieCtx = document.getElementById('pieChart').getContext('2d');
+            if (pieChart) pieChart.destroy();
+            pieChart = new Chart(pieCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels.map(l => l.replace('FILE_', '')),
+                    datasets: [{
+                        data: data,
+                        backgroundColor: backgroundColors,
+                        borderColor: borderColors,
+                        borderWidth: 2,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                color: '#94a3b8',
+                                padding: 15,
+                                font: { size: 12 }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#1e293b',
+                            borderColor: '#334155',
+                            borderWidth: 1,
+                            titleColor: '#f8fafc',
+                            bodyColor: '#cbd5e1',
+                            padding: 12,
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed || 0;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = ((value / total) * 100).toFixed(1);
+                                    return `${label}: ${value} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Bar Chart - Event Type Comparison
+            const barCtx = document.getElementById('barChart').getContext('2d');
+            if (barChart) barChart.destroy();
+            barChart = new Chart(barCtx, {
+                type: 'bar',
+                data: {
+                    labels: labels.map(l => l.replace('FILE_', '')),
+                    datasets: [{
+                        label: 'Events',
+                        data: data,
+                        backgroundColor: backgroundColors,
+                        borderColor: borderColors,
+                        borderWidth: 2,
+                        borderRadius: 6,
+                        barThickness: 40
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#1e293b',
+                            borderColor: '#334155',
+                            borderWidth: 1,
+                            titleColor: '#f8fafc',
+                            bodyColor: '#cbd5e1',
+                            padding: 12
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: '#94a3b8', font: { size: 11 } },
+                            grid: { display: false }
+                        },
+                        y: {
+                            ticks: { color: '#94a3b8', precision: 0 },
+                            beginAtZero: true,
+                            grid: { color: '#334155', lineWidth: 0.5 }
+                        }
+                    }
+                }
+            });
+
+            // Line Chart - Timeline
+            const timeSeries = analytics.time_series || { labels: [], counts: [] };
+            
+            // Format labels to show readable time (HH:MM)
+            const formattedLabels = (timeSeries.labels || []).map(label => {
+                try {
+                    const date = new Date(label);
+                    return date.toLocaleTimeString('en-US', { 
+                        hour: '2-digit', 
+                        minute: '2-digit',
+                        hour12: false 
+                    });
+                } catch (e) {
+                    return label;
+                }
+            });
+
+            const lineCtx = document.getElementById('lineChart').getContext('2d');
+            if (lineChart) lineChart.destroy();
+            lineChart = new Chart(lineCtx, {
+                type: 'line',
+                data: {
+                    labels: formattedLabels,
+                    datasets: [{
+                        label: 'Events per Minute',
+                        data: timeSeries.counts || [],
+                        borderColor: '#38bdf8',
+                        backgroundColor: 'rgba(56, 189, 248, 0.15)',
+                        tension: 0.4,
+                        fill: true,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#38bdf8',
+                        pointBorderColor: '#1e293b',
+                        pointBorderWidth: 2,
+                        pointHoverRadius: 6,
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            align: 'end',
+                            labels: {
+                                color: '#94a3b8',
+                                font: { size: 12 },
+                                usePointStyle: true,
+                                padding: 15
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#1e293b',
+                            borderColor: '#334155',
+                            borderWidth: 1,
+                            titleColor: '#f8fafc',
+                            bodyColor: '#cbd5e1',
+                            padding: 12,
+                            displayColors: true
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#94a3b8',
+                                maxTicksLimit: 10,
+                                maxRotation: 45,
+                                minRotation: 0,
+                                font: { size: 10 }
+                            },
+                            grid: { color: '#334155', lineWidth: 0.5 }
+                        },
+                        y: {
+                            ticks: { color: '#94a3b8', precision: 0 },
+                            beginAtZero: true,
+                            grid: { color: '#334155', lineWidth: 0.5 }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Download logs as CSV
+        function downloadLogs() {
+            fetch('/api/logs?limit=1000')
+                .then(res => res.json())
+                .then(logs => {
+                    if (!logs || logs.length === 0) {
+                        alert('No logs available to download');
+                        return;
+                    }
+
+                    // Create CSV content
+                    let csv = 'ID,Agent Name,Timestamp,Severity,Event Type,File Path\n';
+                    logs.forEach(log => {
+                        csv += `${log.id},"${log.agent_name}","${log.timestamp}",${log.severity},${log.event_type},"${log.file_path}"\n`;
+                    });
+
+                    // Create download link
+                    const blob = new Blob([csv], { type: 'text/csv' });
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `fims_logs_${new Date().toISOString().replace(/[:.]/g, '-')}.csv`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(err => {
+                    console.error('Download error:', err);
+                    alert('Failed to download logs');
+                });
+        }
+
+        // Load data immediately and then every 10 seconds
+        console.log('Dashboard initializing...');
+        fetchData();
+        setInterval(fetchData, 10000);
+    </script>
+</body>
+</html>

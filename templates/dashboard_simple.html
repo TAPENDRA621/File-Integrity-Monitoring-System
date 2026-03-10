@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIMS Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --accent: #38bdf8;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border: #334155;
+        }
+
+        body {
+            font-family: system-ui, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--accent);
+            font-size: 2em;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        #stat-total { color: var(--text-primary); }
+        #stat-added { color: var(--success); }
+        #stat-modified { color: var(--warning); }
+        #stat-deleted { color: var(--danger); }
+
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 16px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        tr:hover {
+            background-color: rgba(148, 163, 184, 0.1);
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-info {
+            background-color: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+        }
+
+        .badge-warning {
+            background-color: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .badge-critical {
+            background-color: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #ef4444;
+        }
+
+        .status-dot.online {
+            background-color: #22c55e;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>FIMS Central</h1>
+                <p style="margin: 5px 0; color: #94a3b8;">File Integrity Monitoring System – Real-time Analytics</p>
+            </div>
+            <div class="status">
+                <span class="status-dot" id="status-dot"></span>
+                <span id="status-text">Connecting...</span>
+            </div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="card">
+                <div class="card-title">Total Events</div>
+                <div id="stat-total" class="stat-value">-</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Files Added</div>
+                <div id="stat-added" class="stat-value">-</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Files Modified</div>
+                <div id="stat-modified" class="stat-value">-</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Files Deleted</div>
+                <div id="stat-deleted" class="stat-value">-</div>
+            </div>
+        </div>
+
+        <div class="layout-grid">
+            <div class="card">
+                <h2 style="margin-top: 0;">Recent Activity</h2>
+                <div id="logs-container" class="loading">Loading logs...</div>
+            </div>
+            <div style="display: grid; gap: 16px;">
+                <div class="card">
+                    <h3>Event Distribution</h3>
+                    <div class="chart-container">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Events (24h)</h3>
+                    <div class="chart-container">
+                        <canvas id="lineChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let barChart = null;
+        let lineChart = null;
+
+        async function fetchData() {
+            try {
+                console.log('Fetching data from API...');
+                const [logsRes, analyticsRes] = await Promise.all([
+                    fetch('/api/logs?limit=100'),
+                    fetch('/api/analytics')
+                ]);
+
+                if (!logsRes.ok || !analyticsRes.ok) {
+                    throw new Error(`API error: logs=${logsRes.status}, analytics=${analyticsRes.status}`);
+                }
+
+                const logs = await logsRes.json();
+                const analytics = await analyticsRes.json();
+
+                console.log('Data received:', { logs: logs.length, analytics });
+
+                updateStats(analytics.counters);
+                renderLogs(logs);
+                updateCharts(analytics);
+
+                // Update status
+                document.getElementById('status-dot').classList.add('online');
+                document.getElementById('status-text').textContent = 'Live';
+
+            } catch (error) {
+                console.error('Fetch error:', error);
+                document.getElementById('status-text').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        function updateStats(counters) {
+            document.getElementById('stat-total').textContent = counters.total_events || 0;
+            document.getElementById('stat-added').textContent = counters.files_added || 0;
+            document.getElementById('stat-modified').textContent = counters.files_modified || 0;
+            document.getElementById('stat-deleted').textContent = counters.files_deleted || 0;
+        }
+
+        function renderLogs(logs) {
+            const container = document.getElementById('logs-container');
+            
+            if (!logs || logs.length === 0) {
+                container.innerHTML = '<p class="loading">No logs yet</p>';
+                return;
+            }
+
+            let html = '<table><thead><tr><th>TIME</th><th>AGENT</th><th>SEVERITY</th><th>EVENT</th><th>FILE</th></tr></thead><tbody>';
+            
+            logs.slice(0, 50).forEach(log => {
+                const badgeClass = log.severity === 'CRITICAL' ? 'badge-critical' : 
+                                   log.severity === 'WARNING' ? 'badge-warning' : 'badge-info';
+                html += `<tr>
+                    <td>${log.timestamp}</td>
+                    <td>${log.agent_name}</td>
+                    <td><span class="badge ${badgeClass}">${log.severity}</span></td>
+                    <td>${log.event_type}</td>
+                    <td style="color: #94a3b8; font-size: 0.85em;">${log.file_path.substring(log.file_path.lastIndexOf('\\') + 1)}</td>
+                </tr>`;
+            });
+            
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        function updateCharts(analytics) {
+            const dist = analytics.distribution || {};
+            const labels = Object.keys(dist);
+            const data = Object.values(dist);
+
+            // Bar Chart
+            const barCtx = document.getElementById('barChart').getContext('2d');
+            if (barChart) barChart.destroy();
+            barChart = new Chart(barCtx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Count',
+                        data: data,
+                        backgroundColor: ['#22c55e', '#f59e0b', '#ef4444'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { ticks: { color: '#94a3b8' } },
+                        y: { ticks: { color: '#94a3b8' }, beginAtZero: true }
+                    }
+                }
+            });
+
+            // Line Chart
+            const timeSeries = analytics.time_series || { labels: [], counts: [] };
+            const lineCtx = document.getElementById('lineChart').getContext('2d');
+            if (lineChart) lineChart.destroy();
+            lineChart = new Chart(lineCtx, {
+                type: 'line',
+                data: {
+                    labels: timeSeries.labels || [],
+                    datasets: [{
+                        label: 'Events/min',
+                        data: timeSeries.counts || [],
+                        borderColor: '#38bdf8',
+                        backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                        tension: 0.3,
+                        fill: true,
+                        pointRadius: 3,
+                        pointBackgroundColor: '#38bdf8'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { ticks: { color: '#94a3b8', maxTicksLimit: 6 } },
+                        y: { ticks: { color: '#94a3b8' }, beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        // Load data immediately and then every 10 seconds
+        console.log('Dashboard initializing...');
+        fetchData();
+        setInterval(fetchData, 10000);
+    </script>
+</body>
+</html>

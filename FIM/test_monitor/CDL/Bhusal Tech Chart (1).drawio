@@ -1,0 +1,111 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" version="29.2.9">
+  <diagram name="Page-1" id="Apwmea6VNfqsUfKcbS4h">
+    <mxGraphModel dx="1139" dy="620" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="-x9DbiX7JjwfHuAqKOt7-19" edge="1" parent="1" source="g1ehghp93cQYYywL7UBT-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="g1ehghp93cQYYywL7UBT-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="340" y="200" />
+              <mxPoint x="140" y="200" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-x9DbiX7JjwfHuAqKOt7-20" edge="1" parent="1" source="g1ehghp93cQYYywL7UBT-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="-x9DbiX7JjwfHuAqKOt7-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-x9DbiX7JjwfHuAqKOt7-21" edge="1" parent="1" source="g1ehghp93cQYYywL7UBT-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="g1ehghp93cQYYywL7UBT-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="340" y="200" />
+              <mxPoint x="540" y="200" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g1ehghp93cQYYywL7UBT-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Chief Executive Officer (CEO)&lt;br&gt;Shashi Bhusal" vertex="1">
+          <mxGeometry height="60" width="200" x="240" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="-x9DbiX7JjwfHuAqKOt7-14" edge="1" parent="1" source="g1ehghp93cQYYywL7UBT-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="-x9DbiX7JjwfHuAqKOt7-9">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="80" y="510" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-x9DbiX7JjwfHuAqKOt7-15" edge="1" parent="1" source="g1ehghp93cQYYywL7UBT-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="-x9DbiX7JjwfHuAqKOt7-10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="80" y="630" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-x9DbiX7JjwfHuAqKOt7-17" edge="1" parent="1" source="g1ehghp93cQYYywL7UBT-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="-x9DbiX7JjwfHuAqKOt7-16">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="80" y="750" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g1ehghp93cQYYywL7UBT-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Operations Division" vertex="1">
+          <mxGeometry height="60" width="120" x="80" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="g1ehghp93cQYYywL7UBT-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Management Division" vertex="1">
+          <mxGeometry height="60" width="120" x="480" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="-x9DbiX7JjwfHuAqKOt7-13" edge="1" parent="1" source="-x9DbiX7JjwfHuAqKOt7-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="-x9DbiX7JjwfHuAqKOt7-11">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="280" y="510" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-x9DbiX7JjwfHuAqKOt7-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Administrative Division" vertex="1">
+          <mxGeometry height="60" width="120" x="280" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="-x9DbiX7JjwfHuAqKOt7-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Operations Manager&lt;br&gt;Sanjeev Shrestha&amp;nbsp;" vertex="1">
+          <mxGeometry height="60" width="120" x="120" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="-x9DbiX7JjwfHuAqKOt7-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Head of Administration&lt;br&gt;Nobel Parajuli&amp;nbsp;&amp;nbsp;" vertex="1">
+          <mxGeometry height="60" width="120" x="320" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="-x9DbiX7JjwfHuAqKOt7-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Business Operations Manager" vertex="1">
+          <mxGeometry height="60" width="120" x="520" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="-x9DbiX7JjwfHuAqKOt7-6" edge="1" parent="1" source="g1ehghp93cQYYywL7UBT-2" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=1;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;" target="-x9DbiX7JjwfHuAqKOt7-2" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="210" y="430" as="sourcePoint" />
+            <mxPoint x="260" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-x9DbiX7JjwfHuAqKOt7-7" edge="1" parent="1" source="g1ehghp93cQYYywL7UBT-3" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=1;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;" target="-x9DbiX7JjwfHuAqKOt7-4" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="160" y="480" as="sourcePoint" />
+            <mxPoint x="200" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-x9DbiX7JjwfHuAqKOt7-8" edge="1" parent="1" source="-x9DbiX7JjwfHuAqKOt7-1" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=1;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;" target="-x9DbiX7JjwfHuAqKOt7-3" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="260" y="345" as="sourcePoint" />
+            <mxPoint x="300" y="435" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-x9DbiX7JjwfHuAqKOt7-9" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Senior Technical Officer&lt;br&gt;Abhishek Phyual" vertex="1">
+          <mxGeometry height="60" width="120" x="120" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="-x9DbiX7JjwfHuAqKOt7-10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Technical Officer&lt;br&gt;Raj Kumar Ram" vertex="1">
+          <mxGeometry height="60" width="120" x="120" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="-x9DbiX7JjwfHuAqKOt7-11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Administrative Support Officer&lt;br&gt;Bibek Timilsina" vertex="1">
+          <mxGeometry height="60" width="120" x="320" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="-x9DbiX7JjwfHuAqKOt7-16" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Internship Trainee&lt;br&gt;Tapendra Singh" vertex="1">
+          <mxGeometry height="60" width="120" x="120" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="-x9DbiX7JjwfHuAqKOt7-22" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Bhusal Tech Trader Pvt. Ltd&amp;nbsp; Organizational Chart&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="320" x="200" y="10" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

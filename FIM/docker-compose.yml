@@ -1,0 +1,46 @@
+services:
+
+  # ─── Central FIMS Server ───────────────────────────────────────────────────
+  fims-server:
+    build: .
+    container_name: fims-server
+    command: gunicorn -k eventlet -w 1 --bind 0.0.0.0:5000 wsgi:app
+    ports:
+      - "5000:5000"
+    volumes:
+      # Persist only the SQLite database — do NOT mount /app or code files get overwritten
+      - fims_db:/app/db
+    environment:
+      FIMS_API_KEY: ${FIMS_API_KEY:-secret-fims-key}
+      SECRET_KEY: ${SECRET_KEY:-change-me-in-production}
+      PORT: "5000"
+      LOG_LEVEL: INFO
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/api/analytics')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  # ─── FIMS Monitoring Agent ─────────────────────────────────────────────────
+  fims-agent:
+    build: .
+    container_name: fims-agent
+    command: python fims_agent.py
+    volumes:
+      # Mount host directories so you can create/modify/delete files
+      # from your machine and the agent will detect the changes
+      - ./test_monitor:/app/test_monitor
+      - ./important_files:/app/important_files
+    environment:
+      FIMS_SERVER_URL: http://fims-server:5000/api/logs
+      FIMS_API_KEY: ${FIMS_API_KEY:-secret-fims-key}
+      FIMS_MONITOR_INTERVAL: "60"
+    depends_on:
+      fims-server:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  fims_db:

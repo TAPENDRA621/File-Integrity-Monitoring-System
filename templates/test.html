@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FIMS Test</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        .card { border: 1px solid #ddd; padding: 20px; margin: 10px 0; }
+        .stat { font-size: 2em; font-weight: bold; color: blue; }
+    </style>
+</head>
+<body>
+    <h1>FIMS Dashboard Test</h1>
+    
+    <div class="card">
+        <h2>API Response Test</h2>
+        <p>Loading data from /api/logs and /api/analytics...</p>
+        <div id="status">Testing...</div>
+        <div id="logs-count" class="card">Logs: <span class="stat">-</span></div>
+        <div id="analytics" class="card">
+            <div>Total Events: <span class="stat" id="total-events">-</span></div>
+            <div>Files Added: <span class="stat" id="files-added">-</span></div>
+            <div>Files Modified: <span class="stat" id="files-modified">-</span></div>
+            <div>Files Deleted: <span class="stat" id="files-deleted">-</span></div>
+        </div>
+    </div>
+    
+    <script>
+        async function testAPI() {
+            try {
+                document.getElementById('status').innerHTML = 'Fetching /api/logs...';
+                const logsRes = await fetch('/api/logs?limit=100');
+                const logsData = await logsRes.json();
+                document.getElementById('logs-count').innerHTML = `Logs: <span class="stat">${logsData.length}</span>`;
+                
+                document.getElementById('status').innerHTML = 'Fetching /api/analytics...';
+                const analyticsRes = await fetch('/api/analytics');
+                const analyticsData = await analyticsRes.json();
+                
+                const counters = analyticsData.counters;
+                document.getElementById('total-events').textContent = counters.total_events;
+                document.getElementById('files-added').textContent = counters.files_added;
+                document.getElementById('files-modified').textContent = counters.files_modified;
+                document.getElementById('files-deleted').textContent = counters.files_deleted;
+                
+                document.getElementById('status').innerHTML = '<span style="color: green;">✓ API Test Successful!</span>';
+            } catch (err) {
+                document.getElementById('status').innerHTML = `<span style="color: red;">Error: ${err.message}</span>`;
+                console.error(err);
+            }
+        }
+        
+        testAPI();
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "FIMS: Server",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/server.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "FIMS: Agent",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/fims_agent.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "FIMS: Viewer (GUI)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/viewer.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "FIMS: Generate Certs",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/generate_cert.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ],
+    "compounds": [
+        {
+            "name": "FIMS: Run System (Server + Agent)",
+            "configurations": ["FIMS: Server", "FIMS: Agent"]
+        }
+    ]
+}

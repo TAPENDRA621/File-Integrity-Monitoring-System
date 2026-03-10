@@ -1,0 +1,472 @@
+[
+  {
+    "timestamp": "2025-12-10T10:45:00.971580",
+    "severity": "INFO",
+    "message": "Initial baseline created",
+    "details": {
+      "file_count": 2
+    }
+  },
+  {
+    "timestamp": "2025-12-10T10:45:00.975432",
+    "severity": "INFO",
+    "message": "No changes detected. All files are intact.",
+    "details": {}
+  },
+  {
+    "timestamp": "2025-12-10T10:50:01.007717",
+    "severity": "INFO",
+    "message": "1 new file(s) detected",
+    "details": {
+      "new_files": [
+        "monitored\\hi.txt"
+      ]
+    }
+  },
+  {
+    "timestamp": "2025-12-10T10:55:01.023899",
+    "severity": "WARNING",
+    "message": "1 file(s) modified",
+    "details": {
+      "modified_files": [
+        "monitored\\sample1.txt"
+      ]
+    }
+  },
+  {
+    "timestamp": "2025-12-10T10:56:05.533166",
+    "severity": "WARNING",
+    "message": "1 file(s) modified",
+    "details": {
+      "modified_files": [
+        "monitored\\sample1.txt"
+      ]
+    }
+  },
+  {
+    "timestamp": "2025-12-10T10:56:34.503576",
+    "severity": "WARNING",
+    "message": "1 file(s) modified",
+    "details": {
+      "modified_files": [
+        "monitored\\sample1.txt"
+      ]
+    }
+  },
+  {
+    "timestamp": "2025-12-10T10:56:34.529555",
+    "severity": "CRITICAL",
+    "message": "1 file(s) deleted",
+    "details": {
+      "deleted_files": [
+        "monitored\\sample2.txt"
+      ]
+    }
+  },
+  {
+    "timestamp": "2025-12-10T10:58:38.995514",
+    "severity": "WARNING",
+    "message": "1 file(s) modified",
+    "details": {
+      "modified_files": [
+        "monitored\\sample1.txt"
+      ]
+    }
+  },
+  {
+    "timestamp": "2025-12-10T10:58:39.027223",
+    "severity": "CRITICAL",
+    "message": "1 file(s) deleted",
+    "details": {
+      "deleted_files": [
+        "monitored\\sample2.txt"
+      ]
+    }
+  },
+  {
+    "timestamp": "2025-12-10T10:58:39.051870",
+    "severity": "INFO",
+    "message": "1 new file(s) detected",
+    "details": {
+      "new_files": [
+        "monitored\\New Microsoft Word Document.docx"
+      ]
+    }
+  },
+  {
+    "timestamp": "2025-12-10T11:03:39.088543",
+    "severity": "WARNING",
+    "message": "1 file(s) modified",
+    "details": {
+      "modified_files": [
+        "monitored\\sample1.txt"
+      ]
+    }
+  },
+  {
+    "timestamp": "2025-12-10T11:03:39.099386",
+    "severity": "CRITICAL",
+    "message": "1 file(s) deleted",
+    "details": {
+      "deleted_files": [
+        "monitored\\sample2.txt"
+      ]
+    }
+  },
+  {
+    "timestamp": "2025-12-10T11:03:39.166838",
+    "severity": "INFO",
+    "message": "1 new file(s) detected",
+    "details": {
+      "new_files": [
+        "monitored\\New Microsoft Word Document.docx"
+      ]
+    }
+  },
+  {
+    "timestamp": "2025-12-10T11:08:39.303996",
+    "severity": "WARNING",
+    "message": "1 file(s) modified",
+    "details": {
+      "modified_files": [
+        "monitored\\sample1.txt"
+      ]
+    }
+  },
+  {
+    "timestamp": "2025-12-10T11:08:39.320172",
+    "severity": "CRITICAL",
+    "message": "1 file(s) deleted",
+    "details": {
+      "deleted_files": [
+        "monitored\\sample2.txt"
+      ]
+    }
+  },
+  {
+    "timestamp": "2025-12-10T11:08:39.350335",
+    "severity": "INFO",
+    "message": "1 new file(s) detected",
+    "details": {
+      "new_files": [
+        "monitored\\New Microsoft Word Document.docx"
+      ]
+    }
+  }
+]{"timestamp": "2025-12-10T11:14:23.141382", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:14:23.143720", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:36.413939", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:36.416591", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:37.443684", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:37.445612", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:38.505771", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:38.507023", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:39.517307", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:39.521025", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:40.539865", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:40.541634", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:41.563411", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:41.570818", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:42.579184", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:42.587943", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:43.594032", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:43.596695", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:44.636611", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:44.637791", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:45.646118", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:45.656500", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:46.678762", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:46.679851", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:47.694384", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:47.696379", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:48.709880", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:48.711606", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:49.743991", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:49.745639", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:50.778153", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:50.779459", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:51.787715", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:51.790372", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:52.817404", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:52.818475", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:53.828537", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:53.836401", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:54.856104", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:54.858255", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:55.868666", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:55.870853", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:56.899043", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:56.900300", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:57.910241", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:57.912178", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:58.925788", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:58.927613", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:17:59.940064", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:17:59.941889", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:00.976293", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:00.977933", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:01.986525", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:01.989371", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:03.004838", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:03.006557", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:04.020330", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:04.022053", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:05.053274", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:05.057849", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:06.067991", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:06.069844", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:07.105019", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:07.106771", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:08.115304", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:08.117767", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:09.136938", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:09.139046", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:10.145971", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:10.149538", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:11.161156", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:11.166641", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:12.176069", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:12.179418", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:13.186049", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:13.187617", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:14.194551", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:14.203654", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:15.216874", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:15.219494", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:16.227592", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:16.233777", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:17.273321", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:17.274935", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:18.283897", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:18.285590", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:19.290936", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:19.293516", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:20.301978", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:20.303439", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:21.308126", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:21.310978", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:22.317489", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:22.320604", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:23.325318", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:23.331340", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:24.341013", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:24.346885", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:25.352682", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:25.356340", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:26.365333", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:26.366654", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:27.374584", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:27.377637", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:28.386594", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:28.388252", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:29.393875", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:29.398050", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:30.402756", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:30.405530", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:31.412578", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:31.415058", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:32.424972", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:32.426319", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:33.434395", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:33.436138", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:34.448619", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:34.451650", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:34.956871", "severity": "INFO", "message": "New file created: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "details": {}}
+{"timestamp": "2025-12-10T11:18:35.456092", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:35.458960", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:36.464618", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:36.467028", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:37.473141", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:37.476685", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:38.483223", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:38.486197", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:39.491215", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:39.493788", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:40.515007", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:40.519190", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:41.526756", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:41.533771", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:42.552175", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:42.554338", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:43.563373", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:43.564746", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:44.572199", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:44.574678", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:45.583011", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:45.584831", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:46.590868", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:46.593288", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:47.605602", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:47.606901", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:48.617694", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:48.620759", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:49.628486", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:49.630318", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:50.636880", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:50.638494", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:51.643584", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:51.650955", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:52.658842", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:52.662716", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:53.666390", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:53.667334", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:54.672370", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:54.674272", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:55.678809", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:55.679855", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:56.689142", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:56.691780", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:57.698080", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:57.699766", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:58.704222", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:58.705951", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:18:59.708792", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:18:59.709727", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:19:00.719935", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:19:00.721370", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:19:01.730220", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:19:01.732215", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:20:45.864835", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:20:45.866957", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:21:45.878691", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:21:45.883516", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:22:45.896514", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:22:45.904326", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:23:45.916737", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:23:45.919985", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:23:54.534346", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:23:54.536815", "severity": "INFO", "message": "3 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:24:19.480917", "severity": "CRITICAL", "message": "File deleted: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "details": {}}
+{"timestamp": "2025-12-10T11:24:43.338137", "severity": "WARNING", "message": "File modified: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt", "details": {}}
+{"timestamp": "2025-12-10T11:24:54.694843", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:24:54.697702", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt"]}}
+{"timestamp": "2025-12-10T11:25:22.672408", "severity": "CRITICAL", "message": "File deleted: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\sample1.txt", "details": {}}
+{"timestamp": "2025-12-10T11:25:45.647761", "severity": "INFO", "message": "New file created: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "details": {}}
+{"timestamp": "2025-12-10T11:25:54.815030", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:25:54.816737", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt"]}}
+{"timestamp": "2025-12-10T11:26:11.473200", "severity": "WARNING", "message": "File modified: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\hello.txt", "details": {}}
+{"timestamp": "2025-12-10T11:26:54.944629", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:26:54.947027", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\hello.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx"]}}
+{"timestamp": "2025-12-10T11:27:55.086225", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:27:55.087926", "severity": "INFO", "message": "2 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\hello.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx"]}}
+{"timestamp": "2025-12-10T11:28:17.674601", "severity": "CRITICAL", "message": "File deleted: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\hello.txt", "details": {}}
+{"timestamp": "2025-12-10T11:28:17.703117", "severity": "CRITICAL", "message": "File deleted: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "details": {}}
+{"timestamp": "2025-12-10T11:28:55.222218", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:29:27.084338", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["monitored\\sample1.txt", "monitored\\sample2.txt"]}}
+{"timestamp": "2025-12-10T11:31:46.595207", "severity": "INFO", "message": "No changes detected.", "details": {}}
+{"timestamp": "2025-12-10T11:32:09.431712", "severity": "INFO", "message": "New file created: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "details": {}}
+{"timestamp": "2025-12-10T11:32:10.923746", "severity": "WARNING", "message": "File modified: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "details": {}}
+{"timestamp": "2025-12-10T11:32:46.749375", "severity": "INFO", "message": "1 new file(s) detected", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp"]}}
+{"timestamp": "2025-12-10T11:33:00.181961", "severity": "CRITICAL", "message": "File deleted: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "details": {}}
+{"timestamp": "2025-12-10T11:33:46.888640", "severity": "INFO", "message": "No changes detected.", "details": {}}
+{"timestamp": "2025-12-10T11:34:47.072812", "severity": "INFO", "message": "No changes detected.", "details": {}}
+{"timestamp": "2025-12-10T11:35:47.204475", "severity": "INFO", "message": "No changes detected.", "details": {}}
+{"timestamp": "2025-12-10T11:36:47.392487", "severity": "INFO", "message": "No changes detected.", "details": {}}
+{"timestamp": "2025-12-10T11:37:47.683907", "severity": "INFO", "message": "No changes detected.", "details": {}}
+{"timestamp": "2025-12-10T11:38:56.522445", "severity": "INFO", "message": "No changes detected.", "details": {}}
+{"timestamp": "2025-12-10T11:39:56.675167", "severity": "INFO", "message": "1 new file(s) detected and added to baseline", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt"]}}
+{"timestamp": "2025-12-10T11:40:56.906431", "severity": "CRITICAL", "message": "1 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt"]}}
+{"timestamp": "2025-12-10T11:40:56.907383", "severity": "INFO", "message": "1 new file(s) detected and added to baseline", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx"]}}
+{"timestamp": "2025-12-10T11:41:21.048743", "severity": "CRITICAL", "message": "1 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt"]}}
+{"timestamp": "2025-12-10T11:41:32.280638", "severity": "CRITICAL", "message": "File deleted: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "details": {}}
+{"timestamp": "2025-12-10T11:42:21.185334", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx"]}}
+{"timestamp": "2025-12-10T11:42:21.186434", "severity": "INFO", "message": "1 new file(s) detected and added to baseline", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Access Database.accdb"]}}
+{"timestamp": "2025-12-10T11:43:14.780919", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx"]}}
+{"timestamp": "2025-12-10T11:43:30.109237", "severity": "INFO", "message": "New file created: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "details": {}}
+{"timestamp": "2025-12-10T11:43:40.057280", "severity": "WARNING", "message": "File modified: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "details": {}}
+{"timestamp": "2025-12-10T11:43:56.301088", "severity": "CRITICAL", "message": "File deleted: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "details": {}}
+{"timestamp": "2025-12-10T11:44:03.511695", "severity": "INFO", "message": "New file created: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Access Database.mdb", "details": {}}
+{"timestamp": "2025-12-10T11:44:03.549588", "severity": "CRITICAL", "message": "File deleted: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Access Database.mdb", "details": {}}
+{"timestamp": "2025-12-10T11:44:14.991259", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx"]}}
+{"timestamp": "2025-12-10T11:44:31.540074", "severity": "CRITICAL", "message": "File deleted: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Access Database.accdb", "details": {}}
+{"timestamp": "2025-12-10T11:44:41.113163", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx"]}}
+{"timestamp": "2025-12-10T11:44:54.631535", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx"]}}
+{"timestamp": "2025-12-10T11:45:02.530590", "severity": "INFO", "message": "New file created: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "details": {}}
+{"timestamp": "2025-12-10T11:45:04.746511", "severity": "WARNING", "message": "File modified: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "details": {}}
+{"timestamp": "2025-12-10T11:45:17.721806", "severity": "INFO", "message": "New file created: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Access Database.mdb", "details": {}}
+{"timestamp": "2025-12-10T11:45:17.746547", "severity": "CRITICAL", "message": "File deleted: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Access Database.mdb", "details": {}}
+{"timestamp": "2025-12-10T11:45:34.188072", "severity": "INFO", "message": "New file created: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "details": {}}
+{"timestamp": "2025-12-10T11:45:43.456978", "severity": "INFO", "message": "New file created: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "details": {}}
+{"timestamp": "2025-12-10T11:45:51.488363", "severity": "INFO", "message": "New file created: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "details": {}}
+{"timestamp": "2025-12-10T11:45:54.806752", "severity": "INFO", "message": "2 new file(s) detected and added to baseline", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx"]}}
+{"timestamp": "2025-12-10T11:46:23.790225", "severity": "INFO", "message": "No changes detected.", "details": {}}
+{"timestamp": "2025-12-10T11:47:23.917520", "severity": "INFO", "message": "No changes detected.", "details": {}}
+{"timestamp": "2025-12-10T11:48:03.991877", "severity": "CRITICAL", "message": "File deleted: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "details": {}}
+{"timestamp": "2025-12-10T11:48:10.737718", "severity": "CRITICAL", "message": "File deleted: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "details": {}}
+{"timestamp": "2025-12-10T11:48:24.057752", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp"]}}
+{"timestamp": "2025-12-10T11:49:24.190465", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp"]}}
+{"timestamp": "2025-12-10T11:49:36.842458", "severity": "INFO", "message": "New file created: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Publisher Document.pub", "details": {}}
+{"timestamp": "2025-12-10T11:49:36.888663", "severity": "WARNING", "message": "File modified: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Publisher Document.pub", "details": {}}
+{"timestamp": "2025-12-10T11:49:36.935380", "severity": "WARNING", "message": "File modified: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Publisher Document.pub", "details": {}}
+{"timestamp": "2025-12-10T11:49:45.614853", "severity": "WARNING", "message": "File modified: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Publisher Document.pub", "details": {}}
+{"timestamp": "2025-12-10T11:50:24.287563", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp"]}}
+{"timestamp": "2025-12-10T11:50:24.288543", "severity": "INFO", "message": "1 new file(s) detected and added to baseline", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Publisher Document.pub"]}}
+{"timestamp": "2025-12-10T11:51:24.607100", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp"]}}
+{"timestamp": "2025-12-10T11:52:11.390869", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp"]}}
+{"timestamp": "2025-12-10T11:52:25.177352", "severity": "CRITICAL", "message": "File deleted: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "details": {}}
+{"timestamp": "2025-12-10T11:52:29.538065", "severity": "CRITICAL", "message": "File deleted: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Publisher Document.pub", "details": {}}
+{"timestamp": "2025-12-10T11:52:34.324214", "severity": "CRITICAL", "message": "File deleted: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "details": {}}
+{"timestamp": "2025-12-10T11:52:41.434318", "severity": "INFO", "message": "New file created: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Publisher Document.pub", "details": {}}
+{"timestamp": "2025-12-10T11:52:41.465347", "severity": "WARNING", "message": "File modified: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Publisher Document.pub", "details": {}}
+{"timestamp": "2025-12-10T11:53:00.504761", "severity": "INFO", "message": "New file created: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Excel Worksheet.xlsx", "details": {}}
+{"timestamp": "2025-12-10T11:53:00.597298", "severity": "WARNING", "message": "File modified: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Excel Worksheet.xlsx", "details": {}}
+{"timestamp": "2025-12-10T11:53:11.555680", "severity": "CRITICAL", "message": "4 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx"]}}
+{"timestamp": "2025-12-10T11:53:11.556455", "severity": "INFO", "message": "1 new file(s) detected and added to baseline", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Excel Worksheet.xlsx"]}}
+{"timestamp": "2025-12-10T11:54:11.652161", "severity": "CRITICAL", "message": "4 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx"]}}
+{"timestamp": "2025-12-10T11:54:38.374378", "severity": "CRITICAL", "message": "File deleted: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Publisher Document.pub", "details": {}}
+{"timestamp": "2025-12-10T11:54:42.772434", "severity": "CRITICAL", "message": "File deleted: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Excel Worksheet.xlsx", "details": {}}
+{"timestamp": "2025-12-10T11:54:53.778712", "severity": "INFO", "message": "New file created: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "details": {}}
+{"timestamp": "2025-12-10T11:55:11.804734", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Publisher Document.pub", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Excel Worksheet.xlsx"]}}
+{"timestamp": "2025-12-10T11:55:16.945086", "severity": "INFO", "message": "New file created: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "details": {}}
+{"timestamp": "2025-12-10T11:56:11.906785", "severity": "CRITICAL", "message": "4 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Publisher Document.pub", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Excel Worksheet.xlsx"]}}
+{"timestamp": "2025-12-10T11:57:12.058803", "severity": "CRITICAL", "message": "4 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Publisher Document.pub", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Excel Worksheet.xlsx"]}}
+{"timestamp": "2025-12-11T19:27:16.646083", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx"]}}
+{"timestamp": "2025-12-12T11:12:50.006389", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx"]}}
+{"timestamp": "2025-12-12T11:24:04.173758", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx"]}}
+{"timestamp": "2025-12-12T11:24:28.365998", "severity": "INFO", "message": "New file created: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Access Database.mdb", "details": {}}
+{"timestamp": "2025-12-12T11:24:28.421337", "severity": "CRITICAL", "message": "File deleted: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Access Database.mdb", "details": {}}
+{"timestamp": "2025-12-12T11:25:04.398541", "severity": "CRITICAL", "message": "2 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx"]}}
+{"timestamp": "2025-12-12T11:25:19.736026", "severity": "INFO", "message": "New file created: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp", "details": {}}
+{"timestamp": "2025-12-12T11:25:21.639913", "severity": "WARNING", "message": "File modified: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp", "details": {}}
+{"timestamp": "2025-12-12T11:25:43.542299", "severity": "CRITICAL", "message": "File deleted: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "details": {}}
+{"timestamp": "2025-12-12T11:25:43.604065", "severity": "CRITICAL", "message": "File deleted: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "details": {}}
+{"timestamp": "2025-12-12T11:26:04.612073", "severity": "CRITICAL", "message": "4 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx"]}}
+{"timestamp": "2025-12-12T11:26:04.615684", "severity": "INFO", "message": "1 new file(s) detected and added to baseline", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-12T11:26:22.690006", "severity": "WARNING", "message": "File modified: C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image 1.bmp", "details": {}}
+{"timestamp": "2025-12-12T11:27:04.758638", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-12T11:27:04.759467", "severity": "INFO", "message": "1 new file(s) detected and added to baseline", "details": {"new_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image 1.bmp"]}}
+{"timestamp": "2025-12-12T11:28:04.932259", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-12T11:29:05.096483", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-12T11:30:05.202867", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-12T11:31:05.307945", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-12T11:31:22.227716", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:13:10.024630", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:14:11.157355", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:15:11.341419", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:16:11.510507", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:23:18.362162", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:24:18.569265", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:25:18.758391", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:26:18.871204", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:27:18.991399", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:28:19.151470", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:29:19.438280", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:30:19.566379", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:31:19.781815", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:34:44.400705", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:35:44.835061", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:36:44.993049", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:37:45.122462", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:38:45.210333", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:39:45.300547", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:40:45.440497", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:43:23.448495", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:44:23.632701", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:45:23.824206", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:48:23.862092", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:49:24.060685", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:50:24.260459", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:51:24.439235", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:52:24.706556", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:53:24.896883", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}
+{"timestamp": "2025-12-19T11:54:25.043714", "severity": "CRITICAL", "message": "5 file(s) deleted", "details": {"deleted_files": ["C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Text Document.txt", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft Word Document.docx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image.bmp", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Microsoft PowerPoint Presentation.pptx", "C:\\Users\\singh\\OneDrive\\Desktop\\FIM\\monitored\\New Bitmap image (2).bmp"]}}

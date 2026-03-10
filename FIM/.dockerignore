@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+.Python
+venv/
+.venv/
+env/
+
+# Database files (managed by named volume)
+*.db
+*.db-shm
+*.db-wal
+
+# Logs and generated files
+*.log
+fims_log.json
+
+# SSL certificates (generate fresh in container if needed)
+cert.pem
+key.pem
+
+# Test/monitor directories (mounted as volumes)
+test_monitor/
+important_files/
+
+# IDE & OS
+.vscode/
+.idea/
+*.DS_Store
+Thumbs.db
+
+# Docker files themselves
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Docs
+README.md
