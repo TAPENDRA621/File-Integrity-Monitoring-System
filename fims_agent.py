@@ -40,8 +40,8 @@ API_KEY = os.environ.get("FIMS_API_KEY", "secret-fims-key")
 MONITOR_INTERVAL = int(os.environ.get("FIMS_MONITOR_INTERVAL", "60"))
 
 DIRECTORIES_TO_WATCH = [
-    os.path.abspath("./test_monitor"),
-    os.path.abspath("./important_files"),
+    os.path.abspath(os.path.join(".", "test_monitor")),
+    os.path.abspath(os.path.join(".", "important_files")),
 ]  # Example paths
 EXCLUDE_EXTENSIONS = [".tmp", ".log", ".swp"]
 
@@ -321,11 +321,13 @@ class FIMAgent:
 
 if __name__ == "__main__":
     # Create a dummy test folder if it doesn't exist so the agent has something to watch immediately
-    if not os.path.exists("./test_monitor"):
-        os.makedirs("./test_monitor")
+    startup_dir = os.path.join(".", "test_monitor")
+    if not os.path.exists(startup_dir):
+        os.makedirs(startup_dir)
         
     start_time = datetime.now().strftime("%Y%m%d_%H%M%S")
-    with open(f"./test_monitor/startup_{start_time}.txt", "w") as f:
+    startup_file = os.path.join(startup_dir, f"startup_{start_time}.txt")
+    with open(startup_file, "w") as f:
         f.write("FIMS Agent started.")
 
     agent = FIMAgent()

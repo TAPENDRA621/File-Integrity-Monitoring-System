@@ -4,19 +4,50 @@ services:
   fims-server:
     build: .
     container_name: fims-server
-    command: gunicorn -k eventlet -w 1 --bind 0.0.0.0:5000 wsgi:app
+    command: gunicorn -k gthread --threads 8 -w 1 --bind 0.0.0.0:5000 wsgi:app
     ports:
-      - "5000:5000"
+      - "5001:5000"
     volumes:
       # Persist only the SQLite database — do NOT mount /app or code files get overwritten
       - fims_db:/app/db
     environment:
       FIMS_API_KEY: ${FIMS_API_KEY:-secret-fims-key}
       SECRET_KEY: ${SECRET_KEY:-change-me-in-production}
+      FIMS_DB_PATH: /app/db/fims.db
+      SOCKETIO_ASYNC_MODE: threading
       PORT: "5000"
       LOG_LEVEL: INFO
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/api/analytics')"]
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/api/dashboard/summary')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  # ─── Sensor Relay (collects and forwards to central server) ───────────────
+  fims-sensor:
+    build: .
+    container_name: fims-sensor
+    command: gunicorn -k gthread --threads 4 -w 1 --bind 0.0.0.0:5100 sensor:app
+    ports:
+      - "5000:5100"
+      - "5514:5514/udp"
+    environment:
+      FIM_UPSTREAM_BASE_URL: http://fims-server:5000
+      FIM_SENSOR_HOST: 0.0.0.0
+      FIM_SENSOR_PORT: "5100"
+      FIM_SENSOR_FORWARD_TIMEOUT: "8"
+      FIM_SENSOR_RETRY_DELAY: "2"
+      FIM_SENSOR_MAX_QUEUE: "5000"
+      FIM_SENSOR_SYSLOG_ENABLED: "true"
+      FIM_SENSOR_SYSLOG_HOST: 0.0.0.0
+      FIM_SENSOR_SYSLOG_PORT: "5514"
+    depends_on:
+      fims-server:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5100/sensor/health')"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -27,18 +58,19 @@ services:
   fims-agent:
     build: .
     container_name: fims-agent
-    command: python fims_agent.py
+    command: python agent.py
     volumes:
       # Mount host directories so you can create/modify/delete files
       # from your machine and the agent will detect the changes
       - ./test_monitor:/app/test_monitor
       - ./important_files:/app/important_files
     environment:
-      FIMS_SERVER_URL: http://fims-server:5000/api/logs
-      FIMS_API_KEY: ${FIMS_API_KEY:-secret-fims-key}
-      FIMS_MONITOR_INTERVAL: "60"
+      FIM_SERVER_BASE_URL: http://fims-sensor:5100
+      FIM_AGENT_ID: docker-agent-01
+      FIM_HEARTBEAT_SECONDS: "30"
+      FIM_MONITOR_PATHS: /app/test_monitor,/app/important_files
     depends_on:
-      fims-server:
+      fims-sensor:
         condition: service_healthy
     restart: unless-stopped
 

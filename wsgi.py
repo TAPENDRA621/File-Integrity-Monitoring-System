@@ -2,7 +2,7 @@
 WSGI entry point for Gunicorn.
 
 Usage (example):
-    gunicorn -k eventlet -w 1 --bind 0.0.0.0:${PORT:-5000} wsgi:app
+    gunicorn -k gthread --threads 8 -w 1 --bind 0.0.0.0:${PORT:-5000} wsgi:app
 """
 
 from server import app  # Flask application with Flask-SocketIO initialized

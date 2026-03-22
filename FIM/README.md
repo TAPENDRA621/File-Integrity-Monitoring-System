@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # File Integrity Monitoring System (FIMS)
 
 A distributed File Integrity Monitoring System built with Python, utilizing a central FastAPI server and multiple agents.
@@ -68,3 +69,7 @@ python viewer.py
 - **Agent**: Calculates SHA-256 hashes of files. Polls every 5 seconds.
 - **Communication**: HTTP POST with JSON payload. Authenticated via `x-api-key` header.
 - **Storage**: SQLite database.
+=======
+# File-Integrity-Monitoring-System
+Final year Project
+>>>>>>> fecd4d8e5c66d5b95907b91d1062b5c1baf52b35

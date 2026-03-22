@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}Agents - FIM{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="mb-0">Registered Agents</h3>
+    <small class="text-muted">Active if heartbeat received in the last 60 seconds</small>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body table-wrap">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Agent ID</th>
+                    <th>Hostname</th>
+                    <th>IP Address</th>
+                    <th>Last Seen (NPT)</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="agentsTable"></tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const agentsTable = document.getElementById('agentsTable');
+
+function statusBadge(status) {
+  return status === 'Active'
+    ? '<span class="badge text-bg-success">Active</span>'
+    : '<span class="badge text-bg-danger">Inactive</span>';
+}
+
+function renderAgents(agents) {
+  agentsTable.innerHTML = agents.map(agent => `
+    <tr>
+      <td>${agent.agent_id}</td>
+      <td>${agent.hostname}</td>
+      <td>${agent.ip_address}</td>
+      <td>${formatUtcToNepali(agent.last_seen_utc)}</td>
+      <td>${statusBadge(agent.status)}</td>
+      <td><a class="btn btn-sm btn-outline-primary" href="/agents/${encodeURIComponent(agent.agent_id)}/logs">View Logs</a></td>
+    </tr>
+  `).join('');
+}
+
+async function loadAgents() {
+  const response = await fetch('/api/agents');
+  const data = await response.json();
+  renderAgents(data);
+}
+
+const socket = io();
+socket.on('agent:update', loadAgents);
+socket.on('dashboard:update', loadAgents);
+
+loadAgents();
+setInterval(loadAgents, 15000);
+</script>
+{% endblock %}

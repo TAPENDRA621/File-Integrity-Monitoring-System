@@ -1,0 +1,6 @@
+.stat-card { min-height: 126px; }
+.table-wrap { max-height: 450px; overflow: auto; }
+.badge-risk-high { background-color: #dc3545; }
+.badge-risk-medium { background-color: #fd7e14; }
+.badge-risk-low { background-color: #ffc107; color: #212529; }
+.nav-link.active { font-weight: 600; }

@@ -1,75 +1,228 @@
-<<<<<<< HEAD
-# File Integrity Monitoring System (FIMS)
+# File Integrity Monitoring System (Agent-Based)
 
-A distributed File Integrity Monitoring System built with Python, utilizing a central FastAPI server and multiple agents.
+This project implements an agent-based File Integrity Monitoring System using:
+- Python
+- Flask + Flask-SocketIO
+- SQLite
+- watchdog
+- Bootstrap + Chart.js
 
 ## Project Structure
 
-- **`server.py`**: Central server (FastAPI) that stores logs and hosts the dashboard.
-- **`fims_agent.py`**: Agent script that monitors files and sends logs to the server.
-- **`viewer.py`**: GUI application (Tkinter) to view logs remotely.
-- **`generate_cert.py`**: Script to generate self-signed SSL certificates.
-- **`templates/dashboard.html`**: Web dashboard template.
-- **`fims.db`**: SQLite database (created on first run).
-
-## Prerequisites
-
-- Python 3.8+
-- Install dependencies:
-  ```bash
-  pip install -r requirements.txt
-  ```
-
-## Setup & Running
-
-### 1. Generate SSL Certificates
-The system uses HTTPS. Access to the dashboard and API requires SSL certificates.
-```bash
-python generate_cert.py
 ```
-This will create `cert.pem` and `key.pem`.
+app.py
+server.py
+agent.py
+models.py
+database/
+  db.py
+routes/
+  api.py
+  web.py
+utils/
+  risk.py
+  time_utils.py
+templates/
+  base.html
+  dashboard.html
+  agents.html
+  agent_logs.html
+  events.html
+static/
+  css/site.css
+  js/dashboard.js
+```
 
-### 2. Start the Server
-Run the central server. It will listen on port 5000.
+## Features
+
+- Lightweight agent/sensor architecture
+- Agent registration, heartbeat, and file event reporting
+- UTC timestamp handling
+- Risk classification utility in a dedicated module
+- Real-time dashboard updates with Socket.IO
+- Agent status tracking (Active/Inactive)
+- Event filtering by agent, risk, and event type
+- Dashboard pie charts and timeline
+- CSV log download (all events and per-agent)
+- Nepali time display (NPT) in dashboard tables
+
+## Setup
+
+1. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+2. Start server
+
 ```bash
 python server.py
-# Output: Uvicorn running on https://0.0.0.0:5000
 ```
-Open your browser and navigate to `https://localhost:5000` to see the dashboard.
-*Note: Accept the security warning for the self-signed certificate.*
 
-### 3. Start the Agent(s)
-Run the agent on the machine(s) you want to monitor.
+3. Start agent on the same machine
+
 ```bash
-python fims_agent.py
+python agent.py
 ```
-The agent monitors `./test_monitor` and `./important_files` by default. You can modify `DIRECTORIES_TO_WATCH` in `fims_agent.py`.
 
-### 4. Start the Viewer (Optional)
-Run the GUI viewer for a desktop experience.
+4. Open dashboard
+
+- http://localhost:5000
+
+## Docker (Cross-Platform)
+
+From the project root, start both server and agent:
+
 ```bash
-python viewer.py
+docker compose up --build
 ```
 
-## Demo Steps
+Run in detached mode:
 
-1.  Start `server.py`.
-2.  Start `fims_agent.py`.
-3.  Open `https://localhost:5000` in a browser.
-4.  Create a file in the `test_monitor` folder:
-    - New logs should appear in the terminal and dashboard as `FILE_ADDED` (Warning).
-5.  Modify the file:
-    - Logs should appear as `FILE_MODIFIED` (Critical).
-6.  Delete the file:
-    - Logs should appear as `FILE_DELETED` (Warning).
-7.  Use `viewer.py` to see the same logs in the desktop app.
+```bash
+docker compose up -d --build
+```
 
-## Architecture
+Stop containers:
 
-- **Agent**: Calculates SHA-256 hashes of files. Polls every 5 seconds.
-- **Communication**: HTTP POST with JSON payload. Authenticated via `x-api-key` header.
-- **Storage**: SQLite database.
-=======
-# File-Integrity-Monitoring-System
-Final year Project
->>>>>>> fecd4d8e5c66d5b95907b91d1062b5c1baf52b35
+```bash
+docker compose down
+```
+
+## Agent Configuration (Environment Variables)
+
+Sample file:
+- `agent_config.example.env`
+
+- `FIM_SERVER_BASE_URL` (default: `http://localhost:5000`)
+- `FIM_AGENT_ID` (default: hostname)
+- `FIM_HEARTBEAT_SECONDS` (default: 30)
+- `FIM_MONITOR_PATHS` (default: `./test_monitor,./important_files`)
+
+Examples:
+
+```bash
+export FIM_SERVER_BASE_URL=http://192.168.1.50:5000
+export FIM_AGENT_ID=lab-agent-01
+export FIM_MONITOR_PATHS=./critical,./configs
+python agent.py
+```
+
+```cmd
+set FIM_SERVER_BASE_URL=http://192.168.1.50:5000
+set FIM_AGENT_ID=lab-agent-01
+set FIM_MONITOR_PATHS=.\critical,.\configs
+python agent.py
+```
+
+## Sensor Relay (for multi-network agents)
+
+Use `sensor.py` as an intermediate collector when agents are behind different NAT/firewall boundaries.
+
+Flow:
+
+`Agent(s) -> Sensor Relay -> Central FIM Server -> Dashboard`
+
+### 1) Start central server
+
+```bash
+python server.py
+```
+
+### 2) Start sensor relay
+
+```bash
+set FIM_UPSTREAM_BASE_URL=http://<central-server-ip>:5000
+set FIM_SENSOR_PORT=5100
+python sensor.py
+```
+
+Linux/macOS shell:
+
+```bash
+export FIM_UPSTREAM_BASE_URL=http://<central-server-ip>:5000
+export FIM_SENSOR_PORT=5100
+python sensor.py
+```
+
+### 3) Point agents to sensor instead of central server
+
+```bash
+set FIM_SERVER_BASE_URL=http://<sensor-ip>:5100
+python agent.py
+```
+
+### 4) Verify relay health
+
+```bash
+curl http://<sensor-ip>:5100/sensor/health
+```
+
+The central dashboard remains unchanged and will show forwarded events normally.
+
+### 5) Collect syslog from network devices (new)
+
+`sensor.py` now includes a built-in UDP syslog listener that converts incoming device logs into FIM events and forwards them to the central server.
+
+Environment variables:
+
+- `FIM_SENSOR_SYSLOG_ENABLED` (default: `true`)
+- `FIM_SENSOR_SYSLOG_HOST` (default: `0.0.0.0`)
+- `FIM_SENSOR_SYSLOG_PORT` (default: `5514`)
+
+Direct run example:
+
+```bash
+set FIM_SENSOR_SYSLOG_ENABLED=true
+set FIM_SENSOR_SYSLOG_HOST=0.0.0.0
+set FIM_SENSOR_SYSLOG_PORT=5514
+python sensor.py
+```
+
+Configure your router/switch/firewall to send syslog to:
+
+- `<sensor-ip>:5514/udp`
+
+Then check:
+
+- `http://<sensor-ip>:5100/sensor/health` for `syslog.received_count` and `syslog.enqueued_count`
+- Central dashboard/events page for new entries under agent IDs like `net-<device-host>`
+
+### Docker mediator port mapping
+
+In Docker compose, sensor is exposed for agent ingestion on `:5000`, UDP syslog on `:5514/udp`, and central dashboard/server is exposed on `:5001`.
+
+- Remote/other-network agents -> `http://<host-ip>:5000`
+- Network devices syslog target -> `<host-ip>:5514/udp`
+- Dashboard -> `http://<host-ip>:5001`
+
+## API Endpoints
+
+- `POST /api/agents/register`
+- `POST /api/agents/heartbeat`
+- `POST /api/events`
+- `GET /api/agents`
+- `GET /api/agents/<agent_id>`
+- `GET /api/agents/<agent_id>/events`
+- `GET /api/events`
+- `GET /api/events/download`
+- `GET /api/agents/<agent_id>/events/download`
+- `GET /api/dashboard/summary`
+
+## Database
+
+The SQLite database is initialized automatically in:
+
+- `database/fims.db`
+
+Tables:
+- `agents`
+- `events`
+
+## Notes for Extension
+
+- Risk logic is centralized in `utils/risk.py`.
+- You can add authentication (API key/JWT) in `routes/api.py`.
+- You can add pagination for large event tables in `models.py` query methods.
+- You can send alert notifications for HIGH risk events from `create_event` route.

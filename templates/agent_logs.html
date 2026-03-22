@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% block title %}Agent Logs - FIM{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="mb-0">Agent Logs: {{ agent_id }}</h3>
+    <div class="d-flex gap-2">
+        <button id="downloadBtn" class="btn btn-outline-primary btn-sm">Download Logs (CSV)</button>
+        <a class="btn btn-outline-secondary btn-sm" href="/agents">Back to Agents</a>
+    </div>
+</div>
+
+<div class="card shadow-sm mb-3">
+    <div class="card-body row g-3 align-items-end">
+        <div class="col-md-3">
+            <label class="form-label">Risk Level</label>
+            <select id="riskFilter" class="form-select">
+                <option value="">All</option>
+                <option value="HIGH">High</option>
+                <option value="MEDIUM">Medium</option>
+                <option value="LOW">Low</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Event Type</label>
+            <select id="eventTypeFilter" class="form-select">
+                <option value="">All</option>
+                <option value="created">Created</option>
+                <option value="modified">Modified</option>
+                <option value="deleted">Deleted</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button id="applyBtn" class="btn btn-primary w-100">Apply Filters</button>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body table-wrap">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Timestamp (NPT)</th>
+                    <th>File Path</th>
+                    <th>Event</th>
+                    <th>Risk</th>
+                    <th>Hash Before</th>
+                    <th>Hash After</th>
+                </tr>
+            </thead>
+            <tbody id="logsTable"></tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const agentId = "{{ agent_id }}";
+const logsTable = document.getElementById('logsTable');
+
+function riskBadge(risk) {
+  const value = (risk || 'LOW').toUpperCase();
+  if (value === 'HIGH') return '<span class="badge badge-risk-high">HIGH</span>';
+  if (value === 'MEDIUM') return '<span class="badge badge-risk-medium">MEDIUM</span>';
+  return '<span class="badge badge-risk-low">LOW</span>';
+}
+
+function renderLogs(logs) {
+  logsTable.innerHTML = logs.map(row => `
+    <tr>
+    <td>${formatUtcToNepali(row.timestamp_utc)}</td>
+      <td class="text-break">${row.file_path}</td>
+      <td>${row.event_type}</td>
+      <td>${riskBadge(row.risk_level)}</td>
+      <td class="small text-muted text-break">${row.hash_before || '-'}</td>
+      <td class="small text-muted text-break">${row.hash_after || '-'}</td>
+    </tr>
+  `).join('');
+}
+
+async function loadLogs() {
+  const risk = document.getElementById('riskFilter').value;
+  const eventType = document.getElementById('eventTypeFilter').value;
+
+  const url = new URL(`/api/agents/${encodeURIComponent(agentId)}/events`, window.location.origin);
+  if (risk) url.searchParams.set('risk_level', risk);
+  if (eventType) url.searchParams.set('event_type', eventType);
+
+  const response = await fetch(url);
+  const data = await response.json();
+  renderLogs(data);
+}
+
+function buildCurrentFilters() {
+    const params = new URLSearchParams();
+    const risk = document.getElementById('riskFilter').value;
+    const eventType = document.getElementById('eventTypeFilter').value;
+    if (risk) params.set('risk_level', risk);
+    if (eventType) params.set('event_type', eventType);
+    params.set('limit', '10000');
+    return params;
+}
+
+document.getElementById('downloadBtn').addEventListener('click', () => {
+    const params = buildCurrentFilters();
+    window.location.href = `/api/agents/${encodeURIComponent(agentId)}/events/download?${params.toString()}`;
+});
+
+document.getElementById('applyBtn').addEventListener('click', loadLogs);
+
+const socket = io();
+socket.on('event:new', (event) => {
+  if (event.agent_id === agentId) loadLogs();
+});
+
+loadLogs();
+</script>
+{% endblock %}
