@@ -8,6 +8,12 @@ const highRiskEventsTable = document.getElementById('highRiskEventsTable');
 const addAgentForm = document.getElementById('addAgentForm');
 const agentsDashboardTable = document.getElementById('agentsDashboardTable');
 const agentLogsPreviewTable = document.getElementById('agentLogsPreviewTable');
+const alertsTable = document.getElementById('alertsTable');
+const alertSeverityFilter = document.getElementById('alertSeverityFilter');
+const clearAlertsBtn = document.getElementById('clearAlertsBtn');
+const highAlertToastElement = document.getElementById('highAlertToast');
+const highAlertToastBody = document.getElementById('highAlertToastBody');
+let highAlertToast;
 
 function riskBadge(risk) {
   const value = (risk || 'LOW').toUpperCase();
@@ -28,6 +34,25 @@ function updateCards(cards) {
   setCard('cardHighRisk', cards.high_risk_events);
   setCard('cardMediumRisk', cards.medium_risk_events);
   setCard('cardLowRisk', cards.low_risk_events);
+}
+
+function updateAlertCards(counts) {
+  setCard('cardTotalAlerts', counts.total_alerts);
+  setCard('cardUnreadAlerts', counts.unread_alerts);
+  setCard('cardHighSeverityAlerts', counts.high_severity_alerts);
+}
+
+function alertSeverityBadge(severity) {
+  const normalized = (severity || 'LOW').toUpperCase();
+  if (normalized === 'HIGH') return '<span class="badge alert-severity-high">HIGH</span>';
+  if (normalized === 'MEDIUM') return '<span class="badge alert-severity-medium">MEDIUM</span>';
+  return '<span class="badge alert-severity-low">LOW</span>';
+}
+
+function alertStatusBadge(isRead) {
+  return isRead
+    ? '<span class="badge text-bg-secondary">Read</span>'
+    : '<span class="badge text-bg-primary">Unread</span>';
 }
 
 function updateRiskChart(riskDistribution) {
@@ -162,6 +187,98 @@ function renderAgentLogsPreview(logs) {
   `).join('');
 }
 
+function renderAlerts(alerts) {
+  if (!alertsTable) {
+    return;
+  }
+
+  alertsTable.innerHTML = (alerts || []).map((alert) => `
+    <tr>
+      <td>${formatUtcToNepali(alert.timestamp_utc)}</td>
+      <td>${alert.agent_name || alert.agent_id}</td>
+      <td class="text-break">${alert.file_path}</td>
+      <td>${alert.event_type}</td>
+      <td>${alertSeverityBadge(alert.severity)}</td>
+      <td>${alertStatusBadge(alert.is_read)}</td>
+      <td>
+        ${alert.is_read
+          ? '<span class="text-muted small">-</span>'
+          : `<button class="btn btn-sm btn-outline-primary" data-action="mark-alert-read" data-alert-id="${alert.alert_id}">Mark Read</button>`}
+      </td>
+    </tr>
+  `).join('');
+}
+
+async function loadAlertCounts() {
+  const response = await fetch('/api/alerts/summary');
+  const counts = await response.json();
+  updateAlertCards(counts);
+}
+
+async function loadAlerts() {
+  if (!alertsTable) {
+    return;
+  }
+
+  const severity = alertSeverityFilter ? alertSeverityFilter.value : '';
+  const query = new URLSearchParams({ limit: '50' });
+  if (severity) {
+    query.set('severity', severity);
+  }
+
+  const response = await fetch(`/api/alerts?${query.toString()}`);
+  const alerts = await response.json();
+  renderAlerts(alerts);
+}
+
+async function markAlertRead(alertId) {
+  const response = await fetch(`/api/alerts/${encodeURIComponent(alertId)}/read`, {
+    method: 'PATCH',
+  });
+  if (!response.ok) {
+    return;
+  }
+
+  const payload = await response.json();
+  if (payload && payload.counts) {
+    updateAlertCards(payload.counts);
+  }
+  await loadAlerts();
+}
+
+async function clearAlerts() {
+  const severity = alertSeverityFilter ? alertSeverityFilter.value : '';
+  const query = new URLSearchParams();
+  if (severity) {
+    query.set('severity', severity);
+  }
+
+  const suffix = query.toString() ? `?${query.toString()}` : '';
+  const response = await fetch(`/api/alerts${suffix}`, { method: 'DELETE' });
+  if (!response.ok) {
+    return;
+  }
+
+  const payload = await response.json();
+  if (payload && payload.counts) {
+    updateAlertCards(payload.counts);
+  }
+  await loadAlerts();
+}
+
+function showHighAlertToast(alert) {
+  if (!highAlertToastElement || !highAlertToastBody) {
+    return;
+  }
+
+  if (!highAlertToast) {
+    highAlertToast = new bootstrap.Toast(highAlertToastElement, { delay: 5000 });
+  }
+
+  highAlertToastBody.textContent = alert.alert_message || `${alert.agent_id} reported a HIGH severity alert.`;
+  highAlertToast.show();
+}
+
 async function loadAgents() {
   if (!agentsDashboardTable) {
     return;
@@ -216,6 +333,26 @@ if (agentsDashboardTable) {
   });
 }
 
+if (alertsTable) {
+  alertsTable.addEventListener('click', (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    if (target.dataset.action === 'mark-alert-read' && target.dataset.alertId) {
+      markAlertRead(target.dataset.alertId);
+    }
+  });
+}
+
+if (alertSeverityFilter) {
+  alertSeverityFilter.addEventListener('change', loadAlerts);
+}
+
+if (clearAlertsBtn) {
+  clearAlertsBtn.addEventListener('click', clearAlerts);
+}
+
 async function loadSummary() {
   const response = await fetch('/api/dashboard/summary');
   const summary = await response.json();
@@ -237,8 +374,22 @@ socket.on('dashboard:update', renderSummary);
 socket.on('event:new', loadSummary);
 socket.on('agent:update', loadSummary);
 socket.on('agent:update', loadAgents);
+socket.on('alerts:update', updateAlertCards);
+socket.on('alert:read', loadAlerts);
+socket.on('alerts:cleared', loadAlerts);
+socket.on('alert:new', (alert) => {
+  loadAlerts();
+  loadAlertCounts();
+  if ((alert.severity || '').toUpperCase() === 'HIGH') {
+    showHighAlertToast(alert);
+  }
+});
 
 loadSummary();
 loadAgents();
+loadAlertCounts();
+loadAlerts();
 setInterval(loadSummary, 20000);
 setInterval(loadAgents, 20000);
+setInterval(loadAlertCounts, 20000);
+setInterval(loadAlerts, 20000);

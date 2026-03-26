@@ -1,4 +1,5 @@
 import json
+import uuid
 from datetime import timedelta
 from typing import Any, Dict, List, Optional
 
@@ -122,6 +123,157 @@ class FIMRepository:
         conn.close()
 
         return dict(row)
+
+    @staticmethod
+    def _severity_from_event_type(event_type: str) -> str:
+        normalized = (event_type or "").lower()
+        if normalized == "deleted":
+            return "HIGH"
+        if normalized == "modified":
+            return "MEDIUM"
+        return "LOW"
+
+    @staticmethod
+    def _alert_message(agent_name: str, event_type: str, file_path: str, severity: str) -> str:
+        return f"[{severity}] {agent_name} reported {event_type} on {file_path}"
+
+    def create_alert_from_event(self, event: Dict[str, Any]) -> Dict[str, Any]:
+        event_type = (event.get("event_type") or "modified").lower()
+        severity = self._severity_from_event_type(event_type)
+        timestamp_utc = event.get("timestamp_utc") or utc_now_iso()
+        agent_name = event.get("hostname") or event.get("agent_id") or "unknown-agent"
+        file_path = event.get("file_path") or ""
+        alert_id = f"ALT-{uuid.uuid4().hex[:12].upper()}"
+        alert_message = self._alert_message(agent_name, event_type, file_path, severity)
+
+        conn = get_connection(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute(
+            """
+            INSERT INTO alerts (
+                alert_id, agent_name, agent_id, file_path,
+                event_type, severity, timestamp_utc, alert_message, is_read
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)
+            """,
+            (
+                alert_id,
+                agent_name,
+                event.get("agent_id", ""),
+                file_path,
+                event_type,
+                severity,
+                timestamp_utc,
+                alert_message,
+            ),
+        )
+        conn.commit()
+
+        cursor.execute("SELECT * FROM alerts WHERE alert_id = ?", (alert_id,))
+        row = cursor.fetchone()
+        conn.close()
+
+        alert = dict(row)
+        alert["is_read"] = bool(alert.get("is_read"))
+        return alert
+
+    def list_alerts(
+        self,
+        unread_only: bool = False,
+        severity: Optional[str] = None,
+        agent_id: Optional[str] = None,
+        limit: int = 300,
+    ) -> List[Dict[str, Any]]:
+        clauses = []
+        params: List[Any] = []
+
+        if unread_only:
+            clauses.append("is_read = 0")
+        if severity:
+            clauses.append("severity = ?")
+            params.append(severity.upper())
+        if agent_id:
+            clauses.append("agent_id = ?")
+            params.append(agent_id)
+
+        where_sql = f"WHERE {' AND '.join(clauses)}" if clauses else ""
+
+        conn = get_connection(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute(
+            f"SELECT * FROM alerts {where_sql} ORDER BY timestamp_utc DESC LIMIT ?",
+            (*params, int(limit)),
+        )
+        rows = cursor.fetchall()
+        conn.close()
+
+        alerts = [dict(row) for row in rows]
+        for alert in alerts:
+            alert["is_read"] = bool(alert.get("is_read"))
+        return alerts
+
+    def mark_alert_read(self, alert_id: str) -> Optional[Dict[str, Any]]:
+        conn = get_connection(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute(
+            "UPDATE alerts SET is_read = 1 WHERE alert_id = ?",
+            (alert_id,),
+        )
+        changed = cursor.rowcount
+        conn.commit()
+
+        if not changed:
+            conn.close()
+            return None
+
+        cursor.execute("SELECT * FROM alerts WHERE alert_id = ?", (alert_id,))
+        row = cursor.fetchone()
+        conn.close()
+
+        alert = dict(row)
+        alert["is_read"] = bool(alert.get("is_read"))
+        return alert
+
+    def clear_alerts(self, severity: Optional[str] = None, agent_id: Optional[str] = None) -> int:
+        clauses = []
+        params: List[Any] = []
+
+        if severity:
+            clauses.append("severity = ?")
+            params.append(severity.upper())
+        if agent_id:
+            clauses.append("agent_id = ?")
+            params.append(agent_id)
+
+        where_sql = f"WHERE {' AND '.join(clauses)}" if clauses else ""
+
+        conn = get_connection(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute(f"DELETE FROM alerts {where_sql}", tuple(params))
+        deleted = cursor.rowcount
+        conn.commit()
+        conn.close()
+        return deleted
+
+    def alerts_summary(self) -> Dict[str, int]:
+        conn = get_connection(self.db_path)
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT COUNT(*) AS c FROM alerts")
+        total_alerts = cursor.fetchone()["c"]
+
+        cursor.execute("SELECT COUNT(*) AS c FROM alerts WHERE is_read = 0")
+        unread_alerts = cursor.fetchone()["c"]
+
+        cursor.execute("SELECT COUNT(*) AS c FROM alerts WHERE severity = 'HIGH'")
+        high_severity_alerts = cursor.fetchone()["c"]
+
+        conn.close()
+
+        return {
+            "total_alerts": total_alerts,
+            "unread_alerts": unread_alerts,
+            "high_severity_alerts": high_severity_alerts,
+        }
 
     def list_agents(self) -> List[Dict[str, Any]]:
         conn = get_connection(self.db_path)

@@ -96,9 +96,29 @@ Sample file:
 - `agent_config.example.env`
 
 - `FIM_SERVER_BASE_URL` (default: `http://localhost:5000`)
+- `FIM_AGENT_NAME` (default: hostname)
 - `FIM_AGENT_ID` (default: hostname)
+- `FIM_AGENT_PORT` (optional)
 - `FIM_HEARTBEAT_SECONDS` (default: 30)
 - `FIM_MONITOR_PATHS` (default: `./test_monitor,./important_files`)
+
+### Agent Setup Wizard (local config)
+
+`agent.py` supports an interactive setup wizard that saves local settings in `config.json`.
+
+- First run with no `config.json`: setup wizard starts automatically (TTY mode).
+- Reconfigure manually: `python agent.py --reconfigure`
+- Show active config: `python agent.py --show-config`
+- Reset saved config: `python agent.py --reset-config`
+
+The wizard asks for:
+
+- Server base URL
+- Agent name
+- Agent ID
+- Agent port (optional)
+- Monitoring mode: single file, single directory, or multiple paths
+- Existing file/folder path(s) to monitor (validated before saving)
 
 Examples:
 

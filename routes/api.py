@@ -175,12 +175,16 @@ def create_event():
         return jsonify({"error": "event_type must be one of created, modified, deleted"}), 400
 
     event = repo().insert_event(payload)
+    alert = repo().create_alert_from_event(event)
     summary = repo().dashboard_summary()
+    alert_counts = repo().alerts_summary()
 
     socketio_instance().emit("event:new", event)
+    socketio_instance().emit("alert:new", alert)
+    socketio_instance().emit("alerts:update", alert_counts)
     socketio_instance().emit("dashboard:update", summary)
 
-    return jsonify({"status": "event_stored", "event": event}), 201
+    return jsonify({"status": "event_stored", "event": event, "alert": alert}), 201
 
 
 @api_bp.get("/agents")
@@ -282,3 +286,59 @@ def download_events():
 @api_bp.get("/dashboard/summary")
 def dashboard_summary():
     return jsonify(repo().dashboard_summary())
+
+
+@api_bp.get("/alerts")
+def get_alerts():
+    limit = int(request.args.get("limit", 300))
+    severity = request.args.get("severity")
+    agent_id = request.args.get("agent_id")
+    alerts = repo().list_alerts(
+        unread_only=False,
+        severity=severity,
+        agent_id=agent_id,
+        limit=limit,
+    )
+    return jsonify(alerts)
+
+
+@api_bp.get("/alerts/unread")
+def get_unread_alerts():
+    limit = int(request.args.get("limit", 300))
+    severity = request.args.get("severity")
+    agent_id = request.args.get("agent_id")
+    alerts = repo().list_alerts(
+        unread_only=True,
+        severity=severity,
+        agent_id=agent_id,
+        limit=limit,
+    )
+    return jsonify(alerts)
+
+
+@api_bp.get("/alerts/summary")
+def get_alert_summary():
+    return jsonify(repo().alerts_summary())
+
+
+@api_bp.patch("/alerts/<alert_id>/read")
+def mark_alert_read(alert_id: str):
+    updated = repo().mark_alert_read(alert_id)
+    if not updated:
+        return jsonify({"error": "alert not found"}), 404
+
+    counts = repo().alerts_summary()
+    socketio_instance().emit("alert:read", updated)
+    socketio_instance().emit("alerts:update", counts)
+    return jsonify({"status": "alert_marked_read", "alert": updated, "counts": counts})
+
+
+@api_bp.delete("/alerts")
+def clear_alerts():
+    severity = request.args.get("severity")
+    agent_id = request.args.get("agent_id")
+    deleted_count = repo().clear_alerts(severity=severity, agent_id=agent_id)
+    counts = repo().alerts_summary()
+    socketio_instance().emit("alerts:cleared", {"deleted": deleted_count})
+    socketio_instance().emit("alerts:update", counts)
+    return jsonify({"status": "alerts_cleared", "deleted": deleted_count, "counts": counts})

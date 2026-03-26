@@ -68,67 +68,155 @@ def _input_port(prompt_text: str, default_port: int = 5000) -> int:
         print("[WARN] Enter a valid port between 1 and 65535.")
 
 
+def _input_optional_port(prompt_text: str, default_port: Optional[int] = None) -> Optional[int]:
+    while True:
+        raw = input(prompt_text).strip()
+        if not raw:
+            return default_port
+        if raw.isdigit() and 1 <= int(raw) <= 65535:
+            return int(raw)
+        print("[WARN] Enter a valid port between 1 and 65535, or leave blank.")
+
+
+def _input_server_base_url(default_value: str) -> str:
+    while True:
+        value = _input_non_empty(f"Server base URL [{default_value}]: ", default_value=default_value)
+        parsed = value.strip().rstrip("/")
+        if parsed.startswith("http://") or parsed.startswith("https://"):
+            return parsed
+        print("[WARN] Enter a valid URL starting with http:// or https://")
+
+
+def _default_demo_path() -> str:
+    return r"C:\\test_monitor" if os.name == "nt" else "/tmp/test_monitor"
+
+
 def _select_monitor_mode() -> str:
     print("\nSelect monitoring mode:")
     print("  1) Monitor single file")
-    print("  2) Monitor directory")
+    print("  2) Monitor single directory")
     print("  3) Monitor multiple paths")
     while True:
         choice = input("Enter option (1/2/3): ").strip()
-        if choice in {"1", "2", "3"}:
-            return choice
+        if choice == "1":
+            return "single_file"
+        if choice == "2":
+            return "single_directory"
+        if choice == "3":
+            return "multiple_paths"
         print("[WARN] Please enter 1, 2, or 3.")
+
+
+def _prompt_existing_path(prompt_text: str, expected: str = "any", default_value: Optional[str] = None) -> str:
+    while True:
+        raw_value = _input_non_empty(prompt_text, default_value=default_value)
+        candidate = os.path.abspath(os.path.expanduser(raw_value))
+        if not os.path.exists(candidate):
+            print(f"[WARN] Path does not exist: {candidate}")
+            continue
+
+        if expected == "file" and not os.path.isfile(candidate):
+            print(f"[WARN] Expected a file path: {candidate}")
+            continue
+        if expected == "directory" and not os.path.isdir(candidate):
+            print(f"[WARN] Expected a directory path: {candidate}")
+            continue
+
+        return candidate
 
 
 def _collect_monitor_targets(mode: str) -> Dict[str, List[str]]:
     scan_paths: List[str] = []
     monitored_files: List[str] = []
+    monitor_targets: List[str] = []
 
-    if mode == "1":
-        file_path = _input_non_empty("File path to monitor: ")
+    if mode == "single_file":
+        file_path = _prompt_existing_path(
+            f"File path to monitor [{_default_demo_path()}]: ",
+            expected="file",
+            default_value=_default_demo_path(),
+        )
         absolute_file = os.path.abspath(file_path)
         monitored_files.append(absolute_file)
         scan_paths.append(os.path.dirname(absolute_file) or os.getcwd())
-    elif mode == "2":
-        directory_path = _input_non_empty("Directory path to monitor: ")
-        scan_paths.append(os.path.abspath(directory_path))
+        monitor_targets.append(absolute_file)
+    elif mode == "single_directory":
+        directory_path = _prompt_existing_path(
+            f"Directory path to monitor [{_default_demo_path()}]: ",
+            expected="directory",
+            default_value=_default_demo_path(),
+        )
+        absolute_directory = os.path.abspath(directory_path)
+        scan_paths.append(absolute_directory)
+        monitor_targets.append(absolute_directory)
     else:
-        raw_paths = _input_non_empty("Multiple paths (comma-separated): ")
-        for token in raw_paths.split(","):
-            candidate = token.strip()
-            if not candidate:
+        while True:
+            raw_paths = _input_non_empty("Multiple paths (comma-separated): ")
+            candidates = [
+                os.path.abspath(os.path.expanduser(token.strip()))
+                for token in raw_paths.split(",")
+                if token.strip()
+            ]
+            if not candidates:
+                print("[WARN] Please provide at least one path.")
                 continue
-            absolute_candidate = os.path.abspath(candidate)
-            if os.path.isfile(absolute_candidate):
-                monitored_files.append(absolute_candidate)
-                scan_paths.append(os.path.dirname(absolute_candidate) or os.getcwd())
-            else:
-                scan_paths.append(absolute_candidate)
+
+            missing = [path for path in candidates if not os.path.exists(path)]
+            if missing:
+                print("[WARN] These paths do not exist:")
+                for path in missing:
+                    print(f"  - {path}")
+                continue
+
+            for absolute_candidate in candidates:
+                if os.path.isfile(absolute_candidate):
+                    monitored_files.append(absolute_candidate)
+                    scan_paths.append(os.path.dirname(absolute_candidate) or os.getcwd())
+                else:
+                    scan_paths.append(absolute_candidate)
+            monitor_targets.extend(candidates)
+            break
 
     scan_paths = _deduplicate_paths(scan_paths)
     monitored_files = _deduplicate_paths(monitored_files)
-    return {"scan_paths": scan_paths, "monitored_files": monitored_files}
+    monitor_targets = _deduplicate_paths(monitor_targets)
+    return {
+        "scan_paths": scan_paths,
+        "monitored_files": monitored_files,
+        "monitor_targets": monitor_targets,
+    }
 
 
 def run_setup_wizard(default_agent_id: str) -> Dict:
     print("\n=== FIM Agent Setup Wizard ===")
-    server_ip = _input_non_empty("Server IP address [127.0.0.1]: ", default_value="127.0.0.1")
-    server_port = _input_port("Server port [5000]: ", default_port=5000)
+    default_base_url = os.environ.get("FIM_SERVER_BASE_URL", "http://127.0.0.1:5000")
+    server_base_url = _input_server_base_url(default_base_url)
+    agent_name = _input_non_empty("Agent name (display label): ", default_value=default_agent_id)
+    agent_id = _input_non_empty(f"Agent ID [{default_agent_id}]: ", default_value=default_agent_id)
+    agent_port = _input_optional_port("Agent port (optional): ", default_port=None)
     mode = _select_monitor_mode()
     monitor_config = _collect_monitor_targets(mode)
 
     config_data = {
-        "server_ip": server_ip,
-        "server_port": server_port,
-        "server_base_url": f"http://{server_ip}:{server_port}",
-        "agent_id": default_agent_id,
+        "server_base_url": server_base_url,
+        "agent_name": agent_name,
+        "agent_id": agent_id,
+        "agent_port": agent_port,
         "monitor_mode": mode,
         "scan_paths": monitor_config["scan_paths"],
         "monitored_files": monitor_config["monitored_files"],
+        "monitor_targets": monitor_config["monitor_targets"],
     }
     save_local_config(config_data)
     print(f"[INFO] Configuration saved to: {CONFIG_FILE}")
     return config_data
+
+
+def reset_local_config() -> bool:
+    if not os.path.exists(CONFIG_FILE):
+        return False
+    os.remove(CONFIG_FILE)
+    return True
 
 
 def build_agent_config(reconfigure: bool) -> "AgentConfig":
@@ -141,20 +229,44 @@ def build_agent_config(reconfigure: bool) -> "AgentConfig":
 
     return AgentConfig(
         server_base_url=existing.get("server_base_url", os.environ.get("FIM_SERVER_BASE_URL", "http://localhost:5000")),
+        agent_name=existing.get("agent_name", os.environ.get("FIM_AGENT_NAME", socket.gethostname())),
         agent_id=existing.get("agent_id", os.environ.get("FIM_AGENT_ID", socket.gethostname())),
+        agent_port=existing.get("agent_port", os.environ.get("FIM_AGENT_PORT")),
         heartbeat_seconds=int(existing.get("heartbeat_seconds", os.environ.get("FIM_HEARTBEAT_SECONDS", "30"))),
         poll_seconds=int(existing.get("poll_seconds", os.environ.get("FIM_POLL_SECONDS", "15"))),
+        monitor_mode=existing.get("monitor_mode", "multiple_paths"),
+        monitor_targets=existing.get("monitor_targets"),
         scan_paths=existing.get("scan_paths"),
         monitored_files=existing.get("monitored_files"),
     )
 
 
+def effective_config_snapshot(config: "AgentConfig") -> Dict:
+    return {
+        "server_base_url": config.server_base_url,
+        "agent_name": config.agent_name,
+        "agent_id": config.agent_id,
+        "agent_port": config.agent_port,
+        "heartbeat_seconds": config.heartbeat_seconds,
+        "poll_seconds": config.poll_seconds,
+        "monitor_mode": config.monitor_mode,
+        "monitor_targets": config.monitor_targets,
+        "scan_paths": config.scan_paths,
+        "monitored_files": config.monitored_files,
+        "config_file": CONFIG_FILE,
+    }
+
+
 @dataclass
 class AgentConfig:
     server_base_url: str = os.environ.get("FIM_SERVER_BASE_URL", "http://localhost:5000")
+    agent_name: str = os.environ.get("FIM_AGENT_NAME", socket.gethostname())
     agent_id: str = os.environ.get("FIM_AGENT_ID", socket.gethostname())
+    agent_port: Optional[int] = None
     heartbeat_seconds: int = int(os.environ.get("FIM_HEARTBEAT_SECONDS", "30"))
     poll_seconds: int = int(os.environ.get("FIM_POLL_SECONDS", "15"))
+    monitor_mode: str = "multiple_paths"
+    monitor_targets: List[str] = None
     scan_paths: List[str] = None
     monitored_files: List[str] = None
 
@@ -184,6 +296,22 @@ class AgentConfig:
             self.monitored_files = []
         else:
             self.monitored_files = _deduplicate_paths(self.monitored_files)
+
+        if self.monitor_targets is None:
+            self.monitor_targets = _deduplicate_paths(list(self.scan_paths))
+        else:
+            self.monitor_targets = _deduplicate_paths(self.monitor_targets)
+
+        if isinstance(self.agent_port, str):
+            if self.agent_port.isdigit() and 1 <= int(self.agent_port) <= 65535:
+                self.agent_port = int(self.agent_port)
+            else:
+                self.agent_port = None
+
+        if self.monitor_mode == "single_file" and len(self.monitored_files) != 1:
+            self.monitor_mode = "multiple_paths"
+        if self.monitor_mode == "single_directory" and len(self.scan_paths) != 1:
+            self.monitor_mode = "multiple_paths"
 
 
 class AgentEventHandler(FileSystemEventHandler):
@@ -276,6 +404,10 @@ class FIMAgent:
             "last_seen_utc": self.utc_now_iso(),
             "monitored_paths": self.config.scan_paths,
         }
+        if self.config.agent_name:
+            payload["agent_name"] = self.config.agent_name
+        if self.config.agent_port:
+            payload["port"] = self.config.agent_port
         self._post("/api/agents/register", payload)
         print(f"[INFO] Agent registered: {self.config.agent_id}")
 
@@ -423,8 +555,21 @@ class FIMAgent:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="FIM Agent")
     parser.add_argument("--reconfigure", action="store_true", help="Run interactive setup wizard and overwrite local config")
+    parser.add_argument("--show-config", action="store_true", help="Print active configuration and exit")
+    parser.add_argument("--reset-config", action="store_true", help="Delete local saved config before startup")
     args = parser.parse_args()
 
-    configuration = build_agent_config(reconfigure=args.reconfigure)
-    agent = FIMAgent(configuration)
-    agent.run()
+    if args.reset_config:
+        removed = reset_local_config()
+        if removed:
+            print(f"[INFO] Deleted local config: {CONFIG_FILE}")
+        else:
+            print(f"[INFO] No local config to delete: {CONFIG_FILE}")
+
+    if args.show_config:
+        configuration = build_agent_config(reconfigure=args.reconfigure)
+        print(json.dumps(effective_config_snapshot(configuration), indent=2))
+    else:
+        configuration = build_agent_config(reconfigure=args.reconfigure)
+        agent = FIMAgent(configuration)
+        agent.run()

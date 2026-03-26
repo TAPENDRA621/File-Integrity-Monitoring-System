@@ -49,10 +49,32 @@ def init_db(db_path: Optional[str] = None) -> None:
         """
     )
 
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS alerts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            alert_id TEXT NOT NULL UNIQUE,
+            agent_name TEXT NOT NULL,
+            agent_id TEXT NOT NULL,
+            file_path TEXT NOT NULL,
+            event_type TEXT NOT NULL,
+            severity TEXT NOT NULL,
+            timestamp_utc TEXT NOT NULL,
+            alert_message TEXT NOT NULL,
+            is_read INTEGER NOT NULL DEFAULT 0,
+            FOREIGN KEY(agent_id) REFERENCES agents(agent_id)
+        )
+        """
+    )
+
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_events_timestamp ON events(timestamp_utc DESC)")
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_events_agent ON events(agent_id)")
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_events_risk ON events(risk_level)")
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_events_type ON events(event_type)")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_alerts_timestamp ON alerts(timestamp_utc DESC)")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_alerts_agent ON alerts(agent_id)")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_alerts_severity ON alerts(severity)")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_alerts_is_read ON alerts(is_read)")
 
     conn.commit()
     conn.close()

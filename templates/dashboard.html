@@ -24,6 +24,12 @@
 </div>
 
 <div class="row g-3 mb-3">
+    <div class="col-md-4"><div class="card shadow-sm stat-card"><div class="card-body"><small class="text-muted">Total Alerts</small><h3 id="cardTotalAlerts">0</h3></div></div></div>
+    <div class="col-md-4"><div class="card shadow-sm stat-card"><div class="card-body"><small class="text-muted">Unread Alerts</small><h3 id="cardUnreadAlerts" class="text-primary">0</h3></div></div></div>
+    <div class="col-md-4"><div class="card shadow-sm stat-card"><div class="card-body"><small class="text-muted">High Severity Alerts</small><h3 id="cardHighSeverityAlerts" class="text-danger">0</h3></div></div></div>
+</div>
+
+<div class="row g-3 mb-3">
     <div class="col-lg-6">
         <div class="card shadow-sm">
             <div class="card-body">
@@ -46,6 +52,48 @@
     <div class="card-body">
         <h5 class="card-title">Recent Event Timeline</h5>
         <canvas id="timelineChart" height="90"></canvas>
+    </div>
+</div>
+
+<div class="card shadow-sm mb-3">
+    <div class="card-body table-wrap">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h5 class="card-title mb-0">Alerts</h5>
+            <div class="d-flex gap-2 align-items-center">
+                <select id="alertSeverityFilter" class="form-select form-select-sm">
+                    <option value="">All Severity</option>
+                    <option value="HIGH">HIGH</option>
+                    <option value="MEDIUM">MEDIUM</option>
+                    <option value="LOW">LOW</option>
+                </select>
+                <button id="clearAlertsBtn" class="btn btn-outline-danger btn-sm" type="button">Clear Alerts</button>
+            </div>
+        </div>
+        <table class="table table-sm table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Timestamp (NPT)</th>
+                    <th>Agent</th>
+                    <th>File</th>
+                    <th>Event</th>
+                    <th>Severity</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="alertsTable"></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
+    <div id="highAlertToast" class="toast border-danger" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto text-danger">High Alert</strong>
+            <small>Just now</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div id="highAlertToastBody" class="toast-body"></div>
     </div>
 </div>
 

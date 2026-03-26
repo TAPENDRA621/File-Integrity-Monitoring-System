@@ -1,0 +1,16 @@
+﻿{
+  "server_base_url": "http://localhost:5000",
+  "agent_name": "demo-agent",
+  "agent_id": "demo-agent-01",
+  "agent_port": 5000,
+  "monitor_mode": "single_directory",
+  "monitor_targets": [
+    "./test_monitor"
+  ],
+  "scan_paths": [
+    "./test_monitor"
+  ],
+  "monitored_files": [],
+  "heartbeat_seconds": 10,
+  "poll_seconds": 5
+}

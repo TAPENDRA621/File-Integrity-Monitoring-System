@@ -3,4 +3,7 @@
 .badge-risk-high { background-color: #dc3545; }
 .badge-risk-medium { background-color: #fd7e14; }
 .badge-risk-low { background-color: #ffc107; color: #212529; }
+.alert-severity-high { background-color: #dc3545; }
+.alert-severity-medium { background-color: #fd7e14; color: #212529; }
+.alert-severity-low { background-color: #198754; }
 .nav-link.active { font-weight: 600; }
