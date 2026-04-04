@@ -41,7 +41,6 @@ MONITOR_INTERVAL = int(os.environ.get("FIMS_MONITOR_INTERVAL", "60"))
 
 DIRECTORIES_TO_WATCH = [
     os.path.abspath(os.path.join(".", "test_monitor")),
-    os.path.abspath(os.path.join(".", "important_files")),
 ]  # Example paths
 EXCLUDE_EXTENSIONS = [".tmp", ".log", ".swp"]
 

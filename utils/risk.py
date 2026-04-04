@@ -42,7 +42,15 @@ LOW_EXTENSIONS = {
 }
 
 
-def classify_risk(file_path: str) -> str:
+def classify_risk(file_path: str, event_type: str = "") -> str:
+    normalized_event_type = (event_type or "").strip().lower()
+    if normalized_event_type == "deleted":
+        return "HIGH"
+    if normalized_event_type == "modified":
+        return "MEDIUM"
+    if normalized_event_type == "created":
+        return "LOW"
+
     normalized = (file_path or "").lower().replace(os.sep, "/")
     suffix = PurePath(normalized).suffix
 

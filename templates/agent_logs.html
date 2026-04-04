@@ -67,12 +67,18 @@ function riskBadge(risk) {
   return '<span class="badge badge-risk-low">LOW</span>';
 }
 
+function replayBadge(row) {
+    return row && row.replayed_offline
+        ? '<span class="badge text-bg-info ms-1">Offline Replay</span>'
+        : '';
+}
+
 function renderLogs(logs) {
   logsTable.innerHTML = logs.map(row => `
     <tr>
     <td>${formatUtcToNepali(row.timestamp_utc)}</td>
       <td class="text-break">${row.file_path}</td>
-      <td>${row.event_type}</td>
+    <td>${row.event_type}${replayBadge(row)}</td>
       <td>${riskBadge(row.risk_level)}</td>
       <td class="small text-muted text-break">${row.hash_before || '-'}</td>
       <td class="small text-muted text-break">${row.hash_after || '-'}</td>

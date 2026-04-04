@@ -8,6 +8,7 @@ from datetime import timedelta
 from flask import Blueprint, Response, current_app, jsonify, request
 
 from utils.time_utils import parse_utc_timestamp
+from utils.deployment import build_agent_config, build_agent_package, build_install_command
 
 api_bp = Blueprint("api", __name__, url_prefix="/api")
 
@@ -51,6 +52,48 @@ def _normalize_agent_id(raw_value: str) -> str:
     return cleaned.lower()
 
 
+def _public_server_base_url() -> str:
+    configured = os.environ.get("FIMS_AGENT_SERVER_BASE_URL", "").strip().rstrip("/")
+    if configured:
+        return configured
+    return request.host_url.rstrip("/")
+
+
+def _public_server_base_urls() -> list[str]:
+    values = []
+    primary = _public_server_base_url()
+    if primary:
+        values.append(primary)
+
+    configured_list = os.environ.get("FIMS_AGENT_SERVER_BASE_URLS", "")
+    if configured_list:
+        for token in re.split(r"[\r\n,;]+", configured_list):
+            cleaned = token.strip().rstrip("/")
+            if cleaned:
+                values.append(cleaned)
+
+    deduped = []
+    seen = set()
+    for value in values:
+        lowered = value.lower()
+        if lowered in seen:
+            continue
+        seen.add(lowered)
+        deduped.append(value)
+    return deduped
+
+
+def _deployment_payload(raw_payload: dict) -> dict:
+    return {
+        "agent_name": str(raw_payload.get("agent_name") or "").strip(),
+        "agent_id": str(raw_payload.get("agent_id") or "").strip(),
+        "monitor_paths": raw_payload.get("monitor_paths"),
+        "heartbeat_seconds": raw_payload.get("heartbeat_seconds"),
+        "poll_seconds": raw_payload.get("poll_seconds"),
+        "risk_label": str(raw_payload.get("risk_label") or "").strip(),
+    }
+
+
 def to_npt(utc_value: str) -> str:
     parsed = parse_utc_timestamp(utc_value)
     if not parsed:
@@ -80,6 +123,7 @@ def events_to_csv_response(rows, filename: str) -> Response:
             "timestamp_npt",
             "file_path",
             "event_type",
+            "replayed_offline",
             "risk_level",
             "hash_before",
             "hash_after",
@@ -97,6 +141,7 @@ def events_to_csv_response(rows, filename: str) -> Response:
                 to_npt(row.get("timestamp_utc")),
                 row.get("file_path"),
                 row.get("event_type"),
+                "yes" if row.get("replayed_offline") else "no",
                 row.get("risk_level"),
                 row.get("hash_before") or "",
                 row.get("hash_after") or "",
@@ -116,25 +161,72 @@ def events_to_csv_response(rows, filename: str) -> Response:
 @api_bp.post("/agents/register")
 def register_agent():
     payload = request.get_json(silent=True) or {}
+    enrollment_token = str(payload.get("enrollment_token") or "").strip()
+
+    requested_agent_id = str(payload.get("agent_id") or "").strip()
+    requested_agent_name = str(payload.get("agent_name") or payload.get("hostname") or "").strip()
+
+    profile = None
+    if enrollment_token:
+        profile = repo().get_agent_profile_by_token(enrollment_token)
+        if not profile:
+            # Token may be stale after profile regeneration; allow same-agent fallback.
+            if requested_agent_id:
+                profile = repo().get_agent_profile(requested_agent_id)
+                if not profile:
+                    normalized_agent_id = _normalize_agent_id(requested_agent_id)
+                    if normalized_agent_id and normalized_agent_id != requested_agent_id:
+                        profile = repo().get_agent_profile(normalized_agent_id)
+            if not profile and requested_agent_name:
+                profile = repo().get_enabled_agent_profile_by_name(requested_agent_name)
+            if not profile:
+                return jsonify({"error": "Invalid enrollment token"}), 401
+        if not profile.get("enabled", False):
+            return jsonify({"error": "Agent profile is disabled"}), 403
+    else:
+        if requested_agent_id:
+            profile = repo().get_agent_profile(requested_agent_id)
+            if not profile:
+                normalized_agent_id = _normalize_agent_id(requested_agent_id)
+                if normalized_agent_id and normalized_agent_id != requested_agent_id:
+                    profile = repo().get_agent_profile(normalized_agent_id)
+        if not profile and requested_agent_name:
+            profile = repo().get_enabled_agent_profile_by_name(requested_agent_name)
+            if profile and not profile.get("enabled", False):
+                return jsonify({"error": "Agent profile is disabled"}), 403
+
     agent_id = payload.get("agent_id") or _normalize_agent_id(payload.get("agent_name", ""))
+    if profile:
+        agent_id = profile["agent_id"]
+
     if not agent_id:
         return jsonify({"error": "agent_id is required"}), 400
 
     normalized_payload = dict(payload)
     normalized_payload["agent_id"] = agent_id
 
+    if profile:
+        normalized_payload["monitored_paths"] = profile.get("monitor_paths", [])
+        if not normalized_payload.get("agent_name"):
+            normalized_payload["agent_name"] = profile.get("agent_name")
+
     if payload.get("agent_name") and not payload.get("hostname"):
         normalized_payload["hostname"] = payload["agent_name"]
+
+    if profile and not normalized_payload.get("hostname"):
+        normalized_payload["hostname"] = profile.get("agent_name") or profile.get("agent_id")
 
     if payload.get("agent_ip_address") and not payload.get("ip_address"):
         normalized_payload["ip_address"] = payload["agent_ip_address"]
 
     saved = repo().register_agent(normalized_payload)
+    if profile:
+        repo().mark_profile_enrolled(profile["agent_id"])
 
     metadata = _load_agent_store()
     existing_meta = metadata.get(agent_id, {})
     metadata[agent_id] = {
-        "agent_name": payload.get("agent_name") or existing_meta.get("agent_name") or saved.get("hostname"),
+        "agent_name": (profile.get("agent_name") if profile else None) or payload.get("agent_name") or existing_meta.get("agent_name") or saved.get("hostname"),
         "ip_address": payload.get("agent_ip_address") or payload.get("ip_address") or existing_meta.get("ip_address") or saved.get("ip_address"),
         "port": str(payload.get("port") or existing_meta.get("port") or ""),
     }
@@ -154,7 +246,12 @@ def heartbeat():
     if not agent_id:
         return jsonify({"error": "agent_id is required"}), 400
 
-    updated = repo().update_heartbeat(agent_id, payload.get("timestamp_utc"))
+    updated = repo().update_heartbeat(
+        agent_id,
+        payload.get("timestamp_utc"),
+        payload.get("monitor_status"),
+        payload.get("monitor_message"),
+    )
     if not updated:
         return jsonify({"error": "agent not found"}), 404
 
@@ -342,3 +439,127 @@ def clear_alerts():
     socketio_instance().emit("alerts:cleared", {"deleted": deleted_count})
     socketio_instance().emit("alerts:update", counts)
     return jsonify({"status": "alerts_cleared", "deleted": deleted_count, "counts": counts})
+
+
+@api_bp.get("/deploy/agents")
+def list_deploy_agents():
+    return jsonify(repo().list_agent_profiles())
+
+
+@api_bp.post("/deploy/agents")
+def create_deploy_agent():
+    payload = _deployment_payload(request.get_json(silent=True) or {})
+    try:
+        profile = repo().create_agent_profile(payload)
+    except ValueError as exc:
+        return jsonify({"error": str(exc)}), 400
+
+    socketio_instance().emit("deploy:profiles:update", {"agent_id": profile["agent_id"]})
+    return jsonify(profile), 201
+
+
+@api_bp.get("/deploy/agents/<agent_id>")
+def get_deploy_agent(agent_id: str):
+    profile = repo().get_agent_profile(agent_id)
+    if not profile:
+        return jsonify({"error": "agent profile not found"}), 404
+    return jsonify(profile)
+
+
+@api_bp.put("/deploy/agents/<agent_id>")
+def update_deploy_agent(agent_id: str):
+    payload = _deployment_payload(request.get_json(silent=True) or {})
+    try:
+        updated = repo().update_agent_profile(agent_id, payload)
+    except ValueError as exc:
+        return jsonify({"error": str(exc)}), 400
+
+    if not updated:
+        return jsonify({"error": "agent profile not found"}), 404
+
+    socketio_instance().emit("deploy:profiles:update", {"agent_id": agent_id})
+    return jsonify(updated)
+
+
+@api_bp.patch("/deploy/agents/<agent_id>/enabled")
+def toggle_deploy_agent(agent_id: str):
+    payload = request.get_json(silent=True) or {}
+    enabled = bool(payload.get("enabled", True))
+    updated = repo().set_agent_profile_enabled(agent_id, enabled=enabled)
+    if not updated:
+        return jsonify({"error": "agent profile not found"}), 404
+
+    socketio_instance().emit("deploy:profiles:update", {"agent_id": agent_id})
+    return jsonify(updated)
+
+
+@api_bp.post("/deploy/agents/<agent_id>/token")
+def regenerate_deploy_agent_token(agent_id: str):
+    updated = repo().regenerate_agent_profile_token(agent_id)
+    if not updated:
+        return jsonify({"error": "agent profile not found"}), 404
+
+    socketio_instance().emit("deploy:profiles:update", {"agent_id": agent_id})
+    return jsonify(updated)
+
+
+@api_bp.delete("/deploy/agents/<agent_id>")
+def delete_deploy_agent(agent_id: str):
+    deleted = repo().delete_agent_profile(agent_id)
+    if not deleted:
+        return jsonify({"error": "agent profile not found"}), 404
+
+    socketio_instance().emit("deploy:profiles:update", {"agent_id": agent_id})
+    return jsonify({"status": "deleted", "agent_id": agent_id})
+
+
+@api_bp.get("/deploy/agents/<agent_id>/config")
+def deploy_agent_config(agent_id: str):
+    profile = repo().get_agent_profile(agent_id)
+    if not profile:
+        return jsonify({"error": "agent profile not found"}), 404
+
+    payload = build_agent_config(
+        profile,
+        _public_server_base_url(),
+        server_base_urls=_public_server_base_urls(),
+    )
+    return jsonify(payload)
+
+
+@api_bp.get("/deploy/agents/<agent_id>/install-command")
+def deploy_agent_install_command(agent_id: str):
+    profile = repo().get_agent_profile(agent_id)
+    if not profile:
+        return jsonify({"error": "agent profile not found"}), 404
+
+    platform_name = request.args.get("platform", "windows").strip().lower()
+    try:
+        command = build_install_command(profile, platform_name)
+    except ValueError as exc:
+        return jsonify({"error": str(exc)}), 400
+    return jsonify({"command": command})
+
+
+@api_bp.get("/deploy/agents/<agent_id>/package")
+def deploy_agent_package(agent_id: str):
+    profile = repo().get_agent_profile(agent_id)
+    if not profile:
+        return jsonify({"error": "agent profile not found"}), 404
+
+    platform_name = request.args.get("platform", "windows").strip().lower()
+    try:
+        filename, package_bytes = build_agent_package(
+            profile,
+            platform_name,
+            _public_server_base_url(),
+            server_base_urls=_public_server_base_urls(),
+        )
+    except (ValueError, FileNotFoundError) as exc:
+        return jsonify({"error": str(exc)}), 400
+
+    return Response(
+        package_bytes,
+        mimetype="application/zip",
+        headers={"Content-Disposition": f"attachment; filename={filename}"},
+    )

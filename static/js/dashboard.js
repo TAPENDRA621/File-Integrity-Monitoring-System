@@ -22,6 +22,12 @@ function riskBadge(risk) {
   return '<span class="badge badge-risk-low">LOW</span>';
 }
 
+function replayBadge(row) {
+  return row && row.replayed_offline
+    ? '<span class="badge text-bg-info ms-1">Offline Replay</span>'
+    : '';
+}
+
 function setCard(id, value) {
   document.getElementById(id).textContent = value ?? 0;
 }
@@ -120,7 +126,7 @@ function renderRecentEvents(events) {
       <td>${formatUtcToNepali(row.timestamp_utc)}</td>
       <td>${row.agent_id}</td>
       <td class="text-break">${row.file_path}</td>
-      <td>${row.event_type}</td>
+      <td>${row.event_type}${replayBadge(row)}</td>
       <td>${riskBadge(row.risk_level)}</td>
     </tr>
   `).join('');
@@ -151,6 +157,15 @@ function statusBadge(status) {
     : '<span class="badge text-bg-danger">Inactive</span>';
 }
 
+function monitorHealthNote(agent) {
+  const monitorStatus = String(agent.monitor_status || '').toLowerCase();
+  const monitorMessage = String(agent.monitor_message || '').trim();
+  if (monitorStatus !== 'degraded' || !monitorMessage) {
+    return '';
+  }
+  return `<div class="small text-warning mt-1">${monitorMessage}</div>`;
+}
+
 function renderAgents(agents) {
   if (!agentsDashboardTable) {
     return;
@@ -163,7 +178,7 @@ function renderAgents(agents) {
       <td>${agent.ip_address || '-'}</td>
       <td>${agent.port || '-'}</td>
       <td>${formatUtcToNepali(agent.last_seen_utc)}</td>
-      <td>${statusBadge(agent.status)}</td>
+      <td>${statusBadge(agent.status)}${monitorHealthNote(agent)}</td>
       <td class="d-flex gap-2">
         <button class="btn btn-sm btn-outline-primary" data-action="fetch-logs" data-agent-id="${agent.agent_id}">Fetch Logs</button>
         <a class="btn btn-sm btn-outline-secondary" href="/agents/${encodeURIComponent(agent.agent_id)}/logs">View Logs</a>
@@ -181,7 +196,7 @@ function renderAgentLogsPreview(logs) {
     <tr>
       <td>${formatUtcToNepali(row.timestamp_utc)}</td>
       <td class="text-break">${row.file_path}</td>
-      <td>${row.event_type}</td>
+      <td>${row.event_type}${replayBadge(row)}</td>
       <td>${riskBadge(row.risk_level)}</td>
     </tr>
   `).join('');

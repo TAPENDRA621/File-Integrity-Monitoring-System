@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% block title %}Deploy Agent - FIM{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="mb-0">Deploy Agent</h3>
+    <span class="badge text-bg-info">Beginner Wizard</span>
+</div>
+
+<div class="alert alert-light border mb-3" role="note">
+    <div class="small">
+        Use this wizard to create one agent package at a time. Endpoints run silently with the generated config and do not ask users any setup questions.
+    </div>
+</div>
+
+<div id="deployAlert" class="alert d-none" role="alert"></div>
+
+<div class="row g-3">
+    <div class="col-lg-9">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Step-By-Step Onboarding</h5>
+
+                <div id="wizardSteps" class="d-flex flex-wrap gap-2 mb-3">
+                    <button class="btn btn-sm btn-primary" type="button" data-step-nav="1">Step 1: Agent name</button>
+                    <button class="btn btn-sm btn-outline-secondary" type="button" data-step-nav="2">Step 2: Monitor paths</button>
+                    <button class="btn btn-sm btn-outline-secondary" type="button" data-step-nav="3">Step 3: Advanced settings</button>
+                    <button class="btn btn-sm btn-outline-secondary" type="button" data-step-nav="4">Step 4: Generate package</button>
+                </div>
+
+                <form id="deployAgentForm" class="row g-3">
+                    <input type="hidden" id="editAgentId" />
+
+                    <div class="col-12" data-step-pane="1">
+                        <h6 class="mb-2">Step 1: Agent Name</h6>
+                        <p class="text-muted small">Give the endpoint a clear friendly name. Example: Finance-Server-01</p>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label" for="agentNameInput">Agent name</label>
+                                <input id="agentNameInput" class="form-control" placeholder="Finance-Server-01" />
+                                <div class="invalid-feedback">Agent name is required.</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label" for="agentIdInput">Agent ID (optional)</label>
+                                <input id="agentIdInput" class="form-control" placeholder="finance-server-01" />
+                                <div class="form-text">Leave blank to auto-generate from agent name.</div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-3">
+                            <button id="step1NextBtn" type="button" class="btn btn-primary">Next</button>
+                        </div>
+                    </div>
+
+                    <div class="col-12 d-none" data-step-pane="2">
+                        <h6 class="mb-2">Step 2: Monitor Paths</h6>
+                        <p class="text-muted small">Enter folders or files to monitor, one path per line.</p>
+
+                        <label class="form-label" for="monitorPathsInput">Monitor paths</label>
+                        <textarea id="monitorPathsInput" class="form-control" rows="6" placeholder="C:\\important-files&#10;C:\\configs"></textarea>
+                        <div class="invalid-feedback">Enter at least one path to monitor.</div>
+                        <div class="form-text">Tip: Start with important folders only. You can edit later.</div>
+
+                        <div class="d-flex justify-content-between mt-3">
+                            <button id="step2BackBtn" type="button" class="btn btn-outline-secondary">Back</button>
+                            <button id="step2NextBtn" type="button" class="btn btn-primary">Next</button>
+                        </div>
+                    </div>
+
+                    <div class="col-12 d-none" data-step-pane="3">
+                        <h6 class="mb-2">Step 3: Advanced Settings (Optional)</h6>
+                        <p class="text-muted small">Defaults work for most users. Change only if needed.</p>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label" for="pollInput">Poll interval (seconds)</label>
+                                <input id="pollInput" class="form-control" type="number" min="5" value="15" />
+                                <div class="invalid-feedback">Poll interval must be 5 seconds or more.</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label" for="heartbeatInput">Heartbeat interval (seconds)</label>
+                                <input id="heartbeatInput" class="form-control" type="number" min="5" value="30" />
+                                <div class="invalid-feedback">Heartbeat interval must be 5 seconds or more.</div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-3">
+                            <button id="step3BackBtn" type="button" class="btn btn-outline-secondary">Back</button>
+                            <button id="step3NextBtn" type="button" class="btn btn-primary">Next</button>
+                        </div>
+                    </div>
+
+                    <div class="col-12 d-none" data-step-pane="4">
+                        <h6 class="mb-2">Step 4: Generate Package</h6>
+                        <p class="text-muted small">Generate an agent profile, then download installer package for your target platform.</p>
+
+                        <div class="border rounded p-3 mb-3 bg-light">
+                            <div class="small mb-2"><strong>Selected agent ID:</strong> <span id="selectedAgentId">Not generated yet</span></div>
+                            <div class="small mb-2"><strong>Enrollment token:</strong></div>
+                            <input id="tokenPreview" class="form-control form-control-sm" readonly placeholder="Generated after package creation" />
+                        </div>
+
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6 d-grid">
+                                <button id="generatePackageBtn" type="submit" class="btn btn-primary">Generate Package</button>
+                            </div>
+                            <div class="col-md-6 d-grid">
+                                <button id="downloadWindowsBtn" type="button" class="btn btn-outline-success" disabled>Download Windows Package</button>
+                            </div>
+                            <div class="col-md-6 d-grid">
+                                <button id="downloadLinuxBtn" type="button" class="btn btn-outline-success" disabled>Download Linux Package</button>
+                            </div>
+                            <div class="col-md-6 d-grid">
+                                <button id="copyCommandBtn" type="button" class="btn btn-outline-secondary" disabled>Copy Install Command</button>
+                            </div>
+                        </div>
+
+                        <div class="row g-2">
+                            <div class="col-md-3">
+                                <label class="form-label" for="commandPlatformSelect">Install platform</label>
+                                <select id="commandPlatformSelect" class="form-select form-select-sm">
+                                    <option value="windows">Windows</option>
+                                    <option value="linux">Linux</option>
+                                </select>
+                            </div>
+                            <div class="col-md-9">
+                                <label class="form-label" for="installCommandPreview">Install command</label>
+                                <input id="installCommandPreview" class="form-control form-control-sm" readonly placeholder="Generate package to view command" />
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-3">
+                            <button id="step4BackBtn" type="button" class="btn btn-outline-secondary">Back</button>
+                            <button id="resetWizardBtn" type="button" class="btn btn-outline-dark">New Agent Wizard</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h6 class="card-title">Quick Help</h6>
+                <ol class="small mb-3 ps-3">
+                    <li>Enter agent name.</li>
+                    <li>Add monitor paths.</li>
+                    <li>Keep default intervals or adjust.</li>
+                    <li>Generate and download package.</li>
+                    <li>Run installer on endpoint.</li>
+                </ol>
+
+                <div class="small text-muted">
+                    Generated package includes binary and config.json so endpoint startup is silent.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm mt-3">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h5 class="card-title mb-0">Existing Agent Profiles</h5>
+            <button id="refreshProfilesBtn" class="btn btn-outline-primary btn-sm" type="button">Refresh</button>
+        </div>
+
+        <div class="table-wrap">
+            <table class="table table-sm table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Agent Name</th>
+                        <th>Agent ID</th>
+                        <th>Status</th>
+                        <th>Last Heartbeat</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="deployProfilesTable"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/deploy.js') }}"></script>
+{% endblock %}

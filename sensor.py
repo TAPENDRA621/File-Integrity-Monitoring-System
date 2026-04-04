@@ -11,6 +11,8 @@ from typing import Any, Dict
 import requests
 from flask import Flask, jsonify, request
 
+from utils.risk import classify_risk
+
 
 UPSTREAM_BASE_URL = os.environ.get("FIM_UPSTREAM_BASE_URL", "http://127.0.0.1:5000").rstrip("/")
 SENSOR_HOST = os.environ.get("FIM_SENSOR_HOST", "0.0.0.0")
@@ -92,7 +94,7 @@ def parse_syslog_payload(raw_message: str, source_ip: str) -> Dict[str, Any]:
         "event_type": event_type,
         "hash_before": None,
         "hash_after": body[:1024],
-        "risk_level": "MEDIUM",
+        "risk_level": classify_risk(f"network/syslog/{hostname}", event_type),
     }
 
 

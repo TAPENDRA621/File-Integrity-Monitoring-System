@@ -1,16 +1,21 @@
-﻿{
-  "server_base_url": "http://localhost:5000",
-  "agent_name": "demo-agent",
-  "agent_id": "demo-agent-01",
-  "agent_port": 5000,
-  "monitor_mode": "single_directory",
+{
+  "server_base_url": "http://192.168.1.70:5000",
+  "server_base_urls": [
+    "http://192.168.1.70:5000",
+    "http://127.0.0.1:5999"
+  ],
+  "agent_name": "buffer-test",
+  "agent_id": "buffer-test",
+  "agent_port": null,
+  "heartbeat_seconds": 30,
+  "poll_seconds": 15,
+  "monitor_mode": "multiple_paths",
   "monitor_targets": [
-    "./test_monitor"
+    "C:\\Users\\Public"
   ],
   "scan_paths": [
-    "./test_monitor"
+    "C:\\Users\\Public"
   ],
   "monitored_files": [],
-  "heartbeat_seconds": 10,
-  "poll_seconds": 5
+  "enrollment_token": null
 }

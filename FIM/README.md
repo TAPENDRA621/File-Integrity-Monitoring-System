@@ -43,7 +43,7 @@ Run the agent on the machine(s) you want to monitor.
 ```bash
 python fims_agent.py
 ```
-The agent monitors `./test_monitor` and `./important_files` by default. You can modify `DIRECTORIES_TO_WATCH` in `fims_agent.py`.
+The agent monitoring paths are configurable in `fims_agent.py` via `DIRECTORIES_TO_WATCH`.
 
 ### 4. Start the Viewer (Optional)
 Run the GUI viewer for a desktop experience.

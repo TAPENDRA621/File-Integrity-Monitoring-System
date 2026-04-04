@@ -21,3 +21,8 @@ def agent_logs_page(agent_id: str):
 @web_bp.get("/events")
 def events_page():
     return render_template("events.html")
+
+
+@web_bp.get("/deploy")
+def deploy_page():
+    return render_template("deploy.html")
