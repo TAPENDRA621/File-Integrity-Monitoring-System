@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}Dashboard - FIM{% endblock %}
 
+{% block head %}
+<link href="{{ url_for('static', filename='css/chatbot.css') }}" rel="stylesheet" />
+{% endblock %}
+
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3 class="mb-0">Main Dashboard</h3>
@@ -190,8 +194,25 @@
         </div>
     </div>
 </div>
+
+<button id="chatbotToggleBtn" type="button" aria-expanded="false" aria-controls="chatbotPanel">
+    Chat Assistant
+</button>
+
+<section id="chatbotPanel" aria-label="FIM assistant chat" role="dialog" aria-modal="false">
+    <header class="chatbot-header">
+        <h6 class="chatbot-title">FIM Assistant</h6>
+        <button id="chatbotCloseBtn" type="button" aria-label="Close chat">&times;</button>
+    </header>
+    <div id="chatbotMessages"></div>
+    <form id="chatbotForm">
+        <input id="chatbotInput" class="form-control form-control-sm" type="text" placeholder="Ask about agents, events, heartbeat..." autocomplete="off" />
+        <button class="btn btn-primary btn-sm" type="submit">Send</button>
+    </form>
+</section>
 {% endblock %}
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+<script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
 {% endblock %}

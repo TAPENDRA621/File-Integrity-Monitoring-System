@@ -3,10 +3,13 @@ import io
 import json
 import os
 import re
+import socket
 from datetime import timedelta
+from urllib.parse import urlsplit, urlunsplit
 
 from flask import Blueprint, Response, current_app, jsonify, request
 
+from services import get_chatbot_response
 from utils.time_utils import parse_utc_timestamp
 from utils.deployment import build_agent_config, build_agent_package, build_install_command
 
@@ -59,11 +62,41 @@ def _public_server_base_url() -> str:
     return request.host_url.rstrip("/")
 
 
+def _infer_lan_ipv4() -> str:
+    probe_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        # The destination is never contacted; connect() is used only to pick the outbound interface.
+        probe_socket.connect(("8.8.8.8", 80))
+        return probe_socket.getsockname()[0]
+    except OSError:
+        return ""
+    finally:
+        probe_socket.close()
+
+
+def _lan_variant_url(candidate_url: str) -> str:
+    parsed = urlsplit(candidate_url)
+    hostname = (parsed.hostname or "").lower()
+    if hostname not in {"localhost", "127.0.0.1", "::1"}:
+        return ""
+
+    lan_ip = _infer_lan_ipv4()
+    if not lan_ip:
+        return ""
+
+    port_suffix = f":{parsed.port}" if parsed.port else ""
+    netloc = f"{lan_ip}{port_suffix}"
+    return urlunsplit((parsed.scheme, netloc, parsed.path, parsed.query, parsed.fragment)).rstrip("/")
+
+
 def _public_server_base_urls() -> list[str]:
     values = []
     primary = _public_server_base_url()
     if primary:
         values.append(primary)
+        lan_variant = _lan_variant_url(primary)
+        if lan_variant:
+            values.append(lan_variant)
 
     configured_list = os.environ.get("FIMS_AGENT_SERVER_BASE_URLS", "")
     if configured_list:
@@ -383,6 +416,20 @@ def download_events():
 @api_bp.get("/dashboard/summary")
 def dashboard_summary():
     return jsonify(repo().dashboard_summary())
+
+
+@api_bp.post("/chatbot")
+def chatbot_query():
+    payload = request.get_json(silent=True) or {}
+    question = str(payload.get("question") or "").strip()
+    if not question:
+        return jsonify({"error": "question is required"}), 400
+
+    answer = get_chatbot_response(
+        question,
+        context_provider=lambda: repo().dashboard_summary(),
+    )
+    return jsonify({"question": question, "answer": answer})
 
 
 @api_bp.get("/alerts")

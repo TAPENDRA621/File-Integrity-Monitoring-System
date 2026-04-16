@@ -14,6 +14,7 @@ from dataclasses import dataclass
 from datetime import timezone, datetime
 from logging.handlers import RotatingFileHandler
 from typing import Dict, List, Optional, Tuple
+from urllib.parse import urlsplit
 
 import requests
 from colorama import Fore, Style, init
@@ -91,6 +92,9 @@ HASH_SNAPSHOT_FILE = os.path.join(_state_dir(), "hash_snapshot.json")
 AGENT_LOG_FILE = os.path.join(_log_dir(), "agent-diagnostics.log")
 MAX_BUFFER_EVENTS = 5000
 MODIFIED_SUPPRESS_WINDOW_SECONDS = 1.5
+DEFAULT_DISCOVERY_PORT = 50505
+DEFAULT_DISCOVERY_TIMEOUT_SECONDS = 2.0
+DEFAULT_DISCOVERY_RETRY_SECONDS = 45.0
 
 LOGGER = logging.getLogger("fim_agent")
 
@@ -215,6 +219,14 @@ def reset_local_config() -> bool:
 def _parse_positive_int(value, default_value: int) -> int:
     try:
         parsed = int(value)
+        return parsed if parsed > 0 else default_value
+    except (TypeError, ValueError):
+        return default_value
+
+
+def _parse_positive_float(value, default_value: float) -> float:
+    try:
+        parsed = float(value)
         return parsed if parsed > 0 else default_value
     except (TypeError, ValueError):
         return default_value
@@ -492,6 +504,19 @@ class FIMAgent:
         self._active_server_base_url = self._server_base_urls[0] if self._server_base_urls else ""
         self._recent_file_events: Dict[str, Tuple[str, float]] = {}
         self._recent_file_events_lock = threading.Lock()
+        self._discovery_port = _parse_positive_int(
+            os.environ.get("FIM_DISCOVERY_PORT", DEFAULT_DISCOVERY_PORT),
+            DEFAULT_DISCOVERY_PORT,
+        )
+        self._discovery_timeout_seconds = _parse_positive_float(
+            os.environ.get("FIM_DISCOVERY_TIMEOUT_SECONDS", DEFAULT_DISCOVERY_TIMEOUT_SECONDS),
+            DEFAULT_DISCOVERY_TIMEOUT_SECONDS,
+        )
+        self._discovery_retry_seconds = _parse_positive_float(
+            os.environ.get("FIM_DISCOVERY_RETRY_SECONDS", DEFAULT_DISCOVERY_RETRY_SECONDS),
+            DEFAULT_DISCOVERY_RETRY_SECONDS,
+        )
+        self._last_discovery_attempt_monotonic = 0.0
 
     @staticmethod
     def _normalize_path_for_compare(path: str) -> str:
@@ -610,6 +635,89 @@ class FIMAgent:
             pass
         print(f"[INFO] Switched active server endpoint to: {cleaned}")
 
+    def _default_server_port(self) -> int:
+        candidates = self._server_candidates()
+        if not candidates:
+            return 5000
+
+        parsed = urlsplit(candidates[0])
+        if parsed.port:
+            return parsed.port
+        return 443 if parsed.scheme.lower() == "https" else 80
+
+    def _discover_server_base_urls(self) -> List[str]:
+        now = time.monotonic()
+        if now - self._last_discovery_attempt_monotonic < self._discovery_retry_seconds:
+            return []
+
+        self._last_discovery_attempt_monotonic = now
+        request_payload = {
+            "type": "FIMS_DISCOVERY_REQUEST",
+            "version": 1,
+            "agent_id": self.config.agent_id,
+        }
+
+        discovered_urls: List[str] = []
+        fallback_port = self._default_server_port()
+
+        try:
+            encoded = json.dumps(request_payload).encode("utf-8")
+        except (TypeError, ValueError):
+            encoded = b'{"type":"FIMS_DISCOVERY_REQUEST","version":1}'
+
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        try:
+            sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+            sock.bind(("", 0))
+            sock.settimeout(self._discovery_timeout_seconds)
+            sock.sendto(encoded, ("255.255.255.255", self._discovery_port))
+
+            deadline = time.monotonic() + self._discovery_timeout_seconds
+            while time.monotonic() < deadline:
+                remaining = max(0.05, deadline - time.monotonic())
+                sock.settimeout(remaining)
+                try:
+                    raw_data, sender = sock.recvfrom(4096)
+                except socket.timeout:
+                    break
+                except OSError:
+                    break
+
+                response_port = fallback_port
+                response_urls: List[str] = []
+                sender_ip = str(sender[0] or "").strip()
+
+                try:
+                    parsed = json.loads(raw_data.decode("utf-8", errors="ignore"))
+                except json.JSONDecodeError:
+                    parsed = {}
+
+                if isinstance(parsed, dict):
+                    declared_port = parsed.get("server_port")
+                    if isinstance(declared_port, int) and 1 <= declared_port <= 65535:
+                        response_port = declared_port
+                    elif isinstance(declared_port, str) and declared_port.isdigit():
+                        parsed_port = int(declared_port)
+                        if 1 <= parsed_port <= 65535:
+                            response_port = parsed_port
+
+                    raw_urls = parsed.get("server_base_urls")
+                    if isinstance(raw_urls, list):
+                        response_urls = [str(item).strip() for item in raw_urls if str(item).strip()]
+
+                if sender_ip:
+                    response_urls.append(f"http://{sender_ip}:{response_port}")
+                discovered_urls.extend(response_urls)
+        except OSError:
+            return []
+        finally:
+            sock.close()
+
+        discovered_urls = _normalize_server_base_urls(discovered_urls)
+        if discovered_urls:
+            print(f"[INFO] Discovered server endpoint(s): {', '.join(discovered_urls)}")
+        return discovered_urls
+
     def _request_with_failover(
         self,
         method: str,
@@ -617,9 +725,25 @@ class FIMAgent:
         payload: Optional[Dict] = None,
         expect_json: bool = False,
         warn: bool = True,
+        allow_discovery: bool = True,
     ):
         candidates = self._server_candidates()
         if not candidates:
+            if allow_discovery:
+                discovered = self._discover_server_base_urls()
+                if discovered:
+                    self._server_base_urls = _normalize_server_base_urls(discovered + self._server_base_urls)
+                    self.config.server_base_urls = list(self._server_base_urls)
+                    self.config.server_base_url = self._server_base_urls[0]
+                    save_local_config(persistable_config_snapshot(self.config))
+                    return self._request_with_failover(
+                        method,
+                        endpoint,
+                        payload=payload,
+                        expect_json=expect_json,
+                        warn=warn,
+                        allow_discovery=False,
+                    )
             if warn:
                 print("[WARN] No server endpoints configured.")
             return None
@@ -644,6 +768,22 @@ class FIMAgent:
                 return True
             except (requests.RequestException, ValueError) as exc:
                 last_exc = exc
+
+        if allow_discovery:
+            discovered = self._discover_server_base_urls()
+            if discovered:
+                self._server_base_urls = _normalize_server_base_urls(discovered + self._server_base_urls)
+                self.config.server_base_urls = list(self._server_base_urls)
+                self.config.server_base_url = self._server_base_urls[0]
+                save_local_config(persistable_config_snapshot(self.config))
+                return self._request_with_failover(
+                    method,
+                    endpoint,
+                    payload=payload,
+                    expect_json=expect_json,
+                    warn=warn,
+                    allow_discovery=False,
+                )
 
         self._set_buffer_mode(True)
         if warn and last_exc is not None:
@@ -1012,6 +1152,11 @@ class FIMAgent:
         for file_path in current_paths & previous_paths:
             old_hash = previous_hashes[file_path]
             new_hash = current_hashes[file_path]
+            # Only classify as modified when both states have concrete hashes.
+            # This avoids false "modified" events caused by transient/unreadable files
+            # during create/delete races or short-lived file locks.
+            if old_hash is None or new_hash is None:
+                continue
             if old_hash != new_hash:
                 self.send_event("modified", file_path, old_hash, new_hash)
 
@@ -1071,6 +1216,13 @@ class FIMAgent:
                 return
             current_hash = self.sha256_file(file_path)
             if current_hash is None:
+                return
+            # If this file had no known baseline hash yet, treat this as warm-up state
+            # instead of a real modification event. The create event (watchdog/poll)
+            # will represent file creation explicitly.
+            if previous_hash is None:
+                with self.hashes_lock:
+                    self.file_hashes[file_path] = current_hash
                 return
             if previous_hash == current_hash:
                 return

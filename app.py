@@ -7,6 +7,7 @@ from flask_socketio import SocketIO
 
 from models import FIMRepository
 from routes import api_bp, web_bp
+from utils.discovery import UdpDiscoveryResponder
 
 socketio = SocketIO()
 
@@ -37,6 +38,10 @@ def create_app() -> Flask:
         "FIMS_AGENT_STORE_PATH",
         os.path.join(os.path.dirname(os.path.abspath(__file__)), "db", "agents_registry.json"),
     )
+
+    discovery_responder = UdpDiscoveryResponder(app.logger)
+    discovery_responder.start()
+    app.extensions["discovery_responder"] = discovery_responder
 
     app.register_blueprint(web_bp)
     app.register_blueprint(api_bp)

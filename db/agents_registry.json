@@ -23,5 +23,10 @@
     "agent_name": "Finance",
     "ip_address": "192.168.1.70",
     "port": ""
+  },
+  "admin": {
+    "agent_name": "Admin",
+    "ip_address": "192.168.1.70",
+    "port": ""
   }
 }

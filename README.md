@@ -146,6 +146,24 @@ Sample file:
 - `FIM_AGENT_PORT` (optional)
 - `FIM_HEARTBEAT_SECONDS` (default: 30)
 - `FIM_MONITOR_PATHS` (required in non-interactive mode; comma-separated file/directory paths)
+- `FIM_DISCOVERY_PORT` (default: 50505, UDP broadcast discovery)
+- `FIM_DISCOVERY_TIMEOUT_SECONDS` (default: 2)
+- `FIM_DISCOVERY_RETRY_SECONDS` (default: 45)
+
+### Automatic Recovery When Server IP Changes
+
+Agents now include UDP LAN discovery fallback.
+
+- If all configured `server_base_url`/`server_base_urls` endpoints fail, the agent broadcasts a discovery request.
+- Running servers respond with current reachable details, and the agent auto-updates/persists endpoints in `config.json`.
+- This allows agents to reconnect after server IP changes without manual endpoint edits (same LAN broadcast domain).
+
+Optional server-side environment variables:
+
+- `FIMS_DISCOVERY_ENABLED` (default: `1`)
+- `FIMS_DISCOVERY_PORT` (default: `50505`)
+- `FIMS_DISCOVERY_SCHEME` (default: `http`)
+- `FIMS_DISCOVERY_HOSTNAME` (optional; advertised hostname override)
 
 ### Agent Setup Wizard (local config)
 
