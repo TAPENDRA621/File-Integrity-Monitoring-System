@@ -7,6 +7,7 @@ import platform
 import re
 import socket
 import sys
+import tempfile
 import threading
 import time
 import traceback
@@ -51,13 +52,23 @@ def _default_log_root() -> str:
 
 
 def _resolve_writable_dir(preferred: str, fallback: str) -> str:
-    for candidate in [preferred, fallback]:
+    candidates = [preferred, fallback, os.path.join(tempfile.gettempdir(), "FIMAgent")]
+    for candidate in candidates:
+        if not candidate:
+            continue
         try:
             os.makedirs(candidate, exist_ok=True)
+            probe_path = os.path.join(candidate, ".fim-write-test")
+            with open(probe_path, "a", encoding="utf-8"):
+                pass
+            try:
+                os.remove(probe_path)
+            except OSError:
+                pass
             return candidate
         except OSError:
             continue
-    return fallback
+    return os.path.abspath(fallback or preferred or ".")
 
 
 def _state_dir() -> str:
@@ -83,7 +94,10 @@ def _log_dir() -> str:
 def _ensure_dir(path: str) -> None:
     if not path:
         return
-    os.makedirs(path, exist_ok=True)
+    try:
+        os.makedirs(path, exist_ok=True)
+    except OSError:
+        pass
 
 
 CONFIG_FILE = os.path.join(_runtime_base_dir(), "config.json")
@@ -252,6 +266,10 @@ def _derive_paths_from_targets(monitor_targets: List[str]) -> Dict[str, List[str
 
 
 def _normalize_config_data(config_data: Dict) -> Dict:
+    monitor_mode = str(config_data.get("monitor_mode", "multiple_paths") or "multiple_paths").strip().lower()
+    if monitor_mode not in {"single_file", "single_directory", "multiple_paths"}:
+        monitor_mode = "multiple_paths"
+
     server_base_url = str(config_data.get("server_base_url", "")).strip().rstrip("/")
     raw_server_base_urls = config_data.get("server_base_urls")
 
@@ -292,8 +310,13 @@ def _normalize_config_data(config_data: Dict) -> Dict:
     if not scan_paths and monitor_targets:
         inferred = _derive_paths_from_targets(monitor_targets)
         scan_paths = inferred["scan_paths"]
-        if not monitored_files:
+        # Only restore monitored_files from inferred targets for explicit single-file mode.
+        if monitor_mode == "single_file" and not monitored_files:
             monitored_files = inferred["monitored_files"]
+
+    # In multi-path or directory mode, never enforce file-level filtering.
+    if monitor_mode != "single_file":
+        monitored_files = []
 
     if not monitor_targets and scan_paths:
         monitor_targets = _deduplicate_paths(list(scan_paths))
@@ -310,7 +333,7 @@ def _normalize_config_data(config_data: Dict) -> Dict:
         "agent_port": config_data.get("agent_port"),
         "heartbeat_seconds": _parse_positive_int(config_data.get("heartbeat_seconds", 30), 30),
         "poll_seconds": _parse_positive_int(config_data.get("poll_seconds", 15), 15),
-        "monitor_mode": config_data.get("monitor_mode", "multiple_paths"),
+        "monitor_mode": monitor_mode,
         "monitor_targets": monitor_targets,
         "scan_paths": scan_paths,
         "monitored_files": monitored_files,
@@ -435,6 +458,10 @@ class AgentConfig:
             self.monitored_files = []
         else:
             self.monitored_files = _deduplicate_paths(self.monitored_files)
+
+        # Only single_file mode should apply strict file-path filtering.
+        if self.monitor_mode != "single_file":
+            self.monitored_files = []
 
         if self.monitor_targets is None:
             self.monitor_targets = _deduplicate_paths(list(self.scan_paths))
@@ -588,6 +615,8 @@ class FIMAgent:
         for file_path in current_paths & previous_paths:
             old_hash = previous_hashes[file_path]
             new_hash = current_hashes[file_path]
+            if old_hash is None or new_hash is None:
+                continue
             if old_hash != new_hash:
                 self.send_event("modified", file_path, old_hash, new_hash, replayed_offline=True)
                 replayed += 1
@@ -886,7 +915,9 @@ class FIMAgent:
                 return 0
 
             for payload in queued:
-                if self._post("/api/events", payload, warn=False):
+                payload_to_send = dict(payload)
+                payload_to_send["replayed_offline"] = True
+                if self._post("/api/events", payload_to_send, warn=False):
                     sent_count += 1
                     continue
                 break
@@ -1018,14 +1049,17 @@ class FIMAgent:
         return True
 
     def _is_monitored_file(self, file_path: str) -> bool:
+        if self.config.monitor_mode != "single_file":
+            return True
         if not self._monitored_files:
             return True
         return _normalized_path_key(file_path) in self._monitored_files
 
     def _remember_recent_file_event(self, file_path: str, event_type: str) -> None:
         now = time.monotonic()
+        event_key = _normalized_path_key(file_path)
         with self._recent_file_events_lock:
-            self._recent_file_events[file_path] = (event_type, now)
+            self._recent_file_events[event_key] = ((event_type or "").lower(), now)
             cutoff = now - MODIFIED_SUPPRESS_WINDOW_SECONDS
             self._recent_file_events = {
                 path: data for path, data in self._recent_file_events.items() if data[1] >= cutoff
@@ -1033,13 +1067,14 @@ class FIMAgent:
 
     def _recent_create_or_delete(self, file_path: str) -> bool:
         now = time.monotonic()
+        event_key = _normalized_path_key(file_path)
         with self._recent_file_events_lock:
-            recent = self._recent_file_events.get(file_path)
+            recent = self._recent_file_events.get(event_key)
             if not recent:
                 return False
             event_type, event_ts = recent
             if now - event_ts > MODIFIED_SUPPRESS_WINDOW_SECONDS:
-                self._recent_file_events.pop(file_path, None)
+                self._recent_file_events.pop(event_key, None)
                 return False
             return event_type in {"created", "deleted"}
 
@@ -1144,9 +1179,11 @@ class FIMAgent:
         current_paths = set(current_hashes)
 
         for file_path in current_paths - previous_paths:
+            self._remember_recent_file_event(file_path, "created")
             self.send_event("created", file_path, None, current_hashes[file_path])
 
         for file_path in previous_paths - current_paths:
+            self._remember_recent_file_event(file_path, "deleted")
             self.send_event("deleted", file_path, previous_hashes[file_path], None)
 
         for file_path in current_paths & previous_paths:
@@ -1188,6 +1225,15 @@ class FIMAgent:
             "hash_after": hash_after,
             "replayed_offline": bool(replayed_offline),
         }
+
+        # While in known offline mode, avoid synchronous network waits and buffer immediately.
+        if self._buffer_mode:
+            queued_count = self._append_buffered_event(payload)
+            if queued_count == 1 or queued_count % 50 == 0:
+                print(f"[WARN] Server offline. Buffered events: {queued_count}")
+            print(self._colored_event_line(event_type, os.path.abspath(file_path)))
+            return
+
         if not self._post("/api/events", payload, warn=False):
             queued_count = self._append_buffered_event(payload)
             if queued_count == 1 or queued_count % 50 == 0:
@@ -1205,8 +1251,8 @@ class FIMAgent:
             current_hash = self.sha256_file(file_path)
             with self.hashes_lock:
                 self.file_hashes[file_path] = current_hash
-            self.send_event("created", file_path, None, current_hash)
             self._remember_recent_file_event(file_path, "created")
+            self.send_event("created", file_path, None, current_hash)
             return
 
         if event_type == "modified":
@@ -1234,8 +1280,8 @@ class FIMAgent:
         if event_type == "deleted":
             with self.hashes_lock:
                 self.file_hashes.pop(file_path, None)
-            self.send_event("deleted", file_path, previous_hash, None)
             self._remember_recent_file_event(file_path, "deleted")
+            self.send_event("deleted", file_path, previous_hash, None)
 
     def start_watchers(self) -> None:
         handler = AgentEventHandler(self)
