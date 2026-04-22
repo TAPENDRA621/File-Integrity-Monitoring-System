@@ -26,7 +26,7 @@
   },
   "admin": {
     "agent_name": "Admin",
-    "ip_address": "192.168.1.70",
+    "ip_address": "192.168.1.94",
     "port": ""
   }
 }
